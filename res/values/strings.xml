@@ -18,6 +18,7 @@
     <string name="app_name">Navigation Drawer Example</string>
     <string-array name="nav_drawer_items">
         <item>Weekly Tracker</item>
+        <item>Reading notifications</item>
         <item>Recommendations</item>
         <item>Write a review</item>
         <item>Share</item>

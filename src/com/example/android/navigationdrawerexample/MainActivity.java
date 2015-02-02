@@ -48,6 +48,9 @@ import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
 import com.androidplot.xy.XYStepMode;
 
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Locale;
@@ -265,15 +268,16 @@ public class MainActivity extends Activity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_planet, container, false);
-            int i = getArguments().getInt(ARG_PLANET_NUMBER);
-            String planet = getResources().getStringArray(R.array.nav_drawer_items)[i];
 
-            int imageId = getResources().getIdentifier(planet.toLowerCase(Locale.getDefault()),
-                    "drawable", getActivity().getPackageName());
-            ((ImageView) rootView.findViewById(R.id.image)).setImageResource(imageId);
-            getActivity().setTitle(planet);
+            View rootView = inflater.inflate(R.layout.graph, container, false);
             return rootView;
+        }
+
+        public String sign() throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException {
+            SignedRequestsHelper signedRequestsHelper = new SignedRequestsHelper();
+            String signed = signedRequestsHelper.sign(UrlParameterHandler.getInstance().buildMapForItemSearch());
+
+            return signed;
         }
     }
 
@@ -321,15 +325,12 @@ public class MainActivity extends Activity {
 //            plot.getGraphWidget().getBackgroundPaint().setColor(Color.WHITE);
 //            plot.getGraphWidget().getGridBackgroundPaint().setColor(Color.WHITE);
 
-            plot.getGraphWidget().getDomainLabelPaint().setColor(Color.parseColor("#F7F7F7"));
-            plot.getGraphWidget().getRangeLabelPaint().setColor(Color.parseColor("#F7F7F7"));
-
             plot.getGraphWidget().getDomainOriginLabelPaint().setColor(Color.BLACK);
             plot.getGraphWidget().getDomainOriginLinePaint().setColor(Color.BLACK);
             plot.getGraphWidget().getRangeOriginLinePaint().setColor(Color.BLACK);
 
-            plot.getGraphWidget().getDomainLabelPaint().setColor(Color.BLACK);
-            plot.getGraphWidget().getRangeLabelPaint().setColor(Color.BLACK);
+            plot.getGraphWidget().getDomainLabelPaint().setColor(Color.parseColor("#E6E6E6"));
+            plot.getGraphWidget().getRangeLabelPaint().setColor(Color.parseColor("#E6E6E6"));
 
             // Domain
             plot.setDomainStep(XYStepMode.INCREMENT_BY_VAL, days.length);
@@ -337,7 +338,7 @@ public class MainActivity extends Activity {
             plot.setDomainStepValue(1);
 
             //Range
-            plot.setRangeBoundaries(0, 150, BoundaryMode.FIXED);
+            plot.setRangeBoundaries(0, 120, BoundaryMode.FIXED);
             plot.setRangeStepValue(5);
             //mySimpleXYPlot.setRangeStep(XYStepMode.SUBDIVIDE, values.length);
             plot.setRangeValueFormat(new DecimalFormat("0"));
@@ -354,5 +355,12 @@ public class MainActivity extends Activity {
 
             return rootView;
         }
+    }
+
+    public static void main(String[] args) throws Exception{
+        SignedRequestsHelper signedRequestsHelper = new SignedRequestsHelper();
+        String signed = signedRequestsHelper.sign(UrlParameterHandler.getInstance().buildMapForItemSearch());
+
+        System.out.println(signed);
     }
 }
