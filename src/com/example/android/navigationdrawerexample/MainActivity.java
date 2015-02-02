@@ -39,14 +39,17 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.androidplot.Plot;
+import com.androidplot.xy.BoundaryMode;
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.PointLabelFormatter;
 import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
+import com.androidplot.xy.XYSeries;
+import com.androidplot.xy.XYStepMode;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 import java.util.Locale;
 
 /**
@@ -252,6 +255,28 @@ public class MainActivity extends Activity {
         }
     }
 
+    public static class Recommendations extends Fragment {
+        public static final String ARG_PLANET_NUMBER = "planet_number";
+
+        public Recommendations() {
+            // Empty constructor required for fragment subclasses
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_planet, container, false);
+            int i = getArguments().getInt(ARG_PLANET_NUMBER);
+            String planet = getResources().getStringArray(R.array.nav_drawer_items)[i];
+
+            int imageId = getResources().getIdentifier(planet.toLowerCase(Locale.getDefault()),
+                    "drawable", getActivity().getPackageName());
+            ((ImageView) rootView.findViewById(R.id.image)).setImageResource(imageId);
+            getActivity().setTitle(planet);
+            return rootView;
+        }
+    }
+
     public static class Graph extends Fragment {
 
         XYPlot plot;
@@ -266,32 +291,64 @@ public class MainActivity extends Activity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.graph, container, false);
             plot = (XYPlot) rootView.findViewById(R.id.mySimpleXYPlot);
-            //Plot layout configurations
-            plot.getGraphWidget().setTicksPerRangeLabel(1);
-            plot.getGraphWidget().setTicksPerDomainLabel(1);
-            plot.getGraphWidget().setRangeValueFormat(
-                    new DecimalFormat("#####.##"));
-            plot.getGraphWidget().setDomainValueFormat(
-                    new DecimalFormat("#####.##"));
-            plot.getGraphWidget().setRangeLabelWidth(25);
-            plot.setRangeLabel("");
-            plot.setDomainLabel("");
 
-            List<Number> xVals = new ArrayList<Number>();
-            List<Number> yVals = new ArrayList<Number>();
-            for (double x=0.0;x<Math.PI*5;x+=Math.PI/20){
-                xVals.add(x);
-                yVals.add(Math.sin(x));
-            }
-            mySeries = new SimpleXYSeries(xVals, yVals, "Title");
+            plot.setBorderStyle(Plot.BorderStyle.NONE, null, null);
+            plot.setPlotMargins(0, 0, 0, 0);
+            plot.setPlotPadding(0, 0, 0, 0);
+            plot.setGridPadding(0, 10, 5, 0);
 
-            LineAndPointFormatter format = new LineAndPointFormatter();
-            format.setPointLabelFormatter(new PointLabelFormatter());
-            format.configure(getActivity(), R.xml.line_point_formatter_with_plf1);
+            Number[] days =   { 1  , 2   , 3   , 4   , 5   , 6   , 7 };
+            Number[] values = { 10, 30, 40, 60, 100, 95, 70};
+
+            XYSeries mySeries = new SimpleXYSeries(
+                    Arrays.asList(days),
+                    Arrays.asList(values),
+                    "Series1");
+
+            LineAndPointFormatter format = new LineAndPointFormatter(
+                    Color.rgb(100, 100, 100),                   // line color
+                    Color.parseColor("#00000000"),                   // point color
+                    Color.parseColor("#59000000"),          // fill color
+                    new PointLabelFormatter(Color.TRANSPARENT));
+            format.getLinePaint().setStrokeWidth(5);
+            format.getVertexPaint().setStrokeWidth(10);
+
+//            LineAndPointFormatter format = new LineAndPointFormatter();
+//            format.setPointLabelFormatter(new PointLabelFormatter());
+//            format.configure(getActivity(), R.xml.line_point_formatter_with_plf1);
             plot.addSeries(mySeries, format);
 
-            plot.getGraphWidget().getDomainLabelPaint().setColor(Color.TRANSPARENT);
+//            plot.getGraphWidget().getBackgroundPaint().setColor(Color.WHITE);
+//            plot.getGraphWidget().getGridBackgroundPaint().setColor(Color.WHITE);
+
+            plot.getGraphWidget().getDomainLabelPaint().setColor(Color.parseColor("#F7F7F7"));
+            plot.getGraphWidget().getRangeLabelPaint().setColor(Color.parseColor("#F7F7F7"));
+
+            plot.getGraphWidget().getDomainOriginLabelPaint().setColor(Color.BLACK);
+            plot.getGraphWidget().getDomainOriginLinePaint().setColor(Color.BLACK);
+            plot.getGraphWidget().getRangeOriginLinePaint().setColor(Color.BLACK);
+
+            plot.getGraphWidget().getDomainLabelPaint().setColor(Color.BLACK);
+            plot.getGraphWidget().getRangeLabelPaint().setColor(Color.BLACK);
+
+            // Domain
+            plot.setDomainStep(XYStepMode.INCREMENT_BY_VAL, days.length);
+            plot.setDomainValueFormat(new DecimalFormat("0"));
+            plot.setDomainStepValue(1);
+
+            //Range
+            plot.setRangeBoundaries(0, 150, BoundaryMode.FIXED);
+            plot.setRangeStepValue(5);
+            //mySimpleXYPlot.setRangeStep(XYStepMode.SUBDIVIDE, values.length);
+            plot.setRangeValueFormat(new DecimalFormat("0"));
+
+            //Remove legend
             plot.getLayoutManager().remove(plot.getLegendWidget());
+//            plot.getLayoutManager().remove(plot.getDomainLabelWidget());
+//            plot.getLayoutManager().remove(plot.getRangeLabelWidget());
+            plot.getLayoutManager().remove(plot.getTitleWidget());
+            plot.getLayoutManager().remove(plot.getLegendWidget());
+
             plot.redraw();
             getActivity().setTitle("Graph");
 
