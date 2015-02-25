@@ -40,28 +40,42 @@ public final class R {
         public static final int venus=0x7f02000b;
     }
     public static final class id {
-        public static final int action_websearch=0x7f090005;
+        public static final int action_websearch=0x7f09000c;
+        public static final int button1=0x7f090005;
+        public static final int button2=0x7f090006;
+        public static final int button3=0x7f090007;
+        public static final int button4=0x7f090008;
         public static final int content_frame=0x7f090001;
         public static final int drawer_layout=0x7f090000;
-        public static final int image=0x7f090003;
+        public static final int image=0x7f09000a;
         public static final int left_drawer=0x7f090002;
-        public static final int mySimpleXYPlot=0x7f090004;
+        public static final int listView1=0x7f090009;
+        public static final int mySimpleXYPlot=0x7f09000b;
+        public static final int scrollView1=0x7f090003;
+        public static final int textView1=0x7f090004;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
-        public static final int drawer_list_item=0x7f030001;
-        public static final int fragment_planet=0x7f030002;
-        public static final int graph=0x7f030003;
+        public static final int bluetooth=0x7f030001;
+        public static final int drawer_list_item=0x7f030002;
+        public static final int fragment_planet=0x7f030003;
+        public static final int graph=0x7f030004;
     }
     public static final class menu {
         public static final int main=0x7f080000;
     }
     public static final class string {
-        public static final int action_websearch=0x7f070000;
-        public static final int app_name=0x7f070001;
-        public static final int app_not_available=0x7f070002;
-        public static final int drawer_close=0x7f070003;
-        public static final int drawer_open=0x7f070004;
+        public static final int List=0x7f070000;
+        public static final int Visible=0x7f070001;
+        public static final int action_settings=0x7f070002;
+        public static final int action_websearch=0x7f070003;
+        public static final int app_name=0x7f070004;
+        public static final int app_not_available=0x7f070005;
+        public static final int drawer_close=0x7f070006;
+        public static final int drawer_open=0x7f070007;
+        public static final int hello_world=0x7f070008;
+        public static final int off=0x7f070009;
+        public static final int on=0x7f07000a;
     }
     public static final class xml {
         public static final int line_point_formatter_with_plf1=0x7f040000;

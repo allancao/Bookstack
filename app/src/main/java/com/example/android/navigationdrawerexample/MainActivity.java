@@ -21,6 +21,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.SearchManager;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -36,6 +37,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -52,8 +54,10 @@ import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Set;
 
 public class MainActivity extends Activity {
     private DrawerLayout mDrawerLayout;
@@ -63,6 +67,7 @@ public class MainActivity extends Activity {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private String[] mPlanetTitles;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -237,6 +242,10 @@ public class MainActivity extends Activity {
     public static class BlueToothFragment extends Fragment {
 
         private BluetoothAdapter BA;
+        private Button On,Off,Visible,list;
+        private Set<BluetoothDevice> pairedDevices;
+        private ListView lv;
+
         public BlueToothFragment() {
             // Empty constructor required for fragment subclasses
         }
@@ -244,26 +253,78 @@ public class MainActivity extends Activity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_planet, container, false);
+            View rootView = inflater.inflate(R.layout.bluetooth, container, false);
+            super.onCreate(savedInstanceState);
 
-//            int i = getArguments().getInt(ARG_PLANET_NUMBER);
-//            String planet = getResources().getStringArray(R.array.nav_drawer_items)[i];
-//            int imageId = getResources().getIdentifier(planet.toLowerCase(Locale.getDefault()),
-//                    "drawable", getActivity().getPackageName());
-//            ((ImageView) rootView.findViewById(R.id.image)).setImageResource(imageId);
+            On = (Button)rootView.findViewById(R.id.button1);
+            On.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!BA.isEnabled()) {
+                        Intent turnOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                        startActivityForResult(turnOn, 0);
+                        Toast.makeText(getActivity(),"Turned on"
+                                ,Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        Toast.makeText(getActivity(),"Already on",
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+
+            Off = (Button)rootView.findViewById(R.id.button4);
+            Off.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    BA.disable();
+                    Toast.makeText(getActivity(),"Turned off" ,
+                            Toast.LENGTH_LONG).show();
+                }
+            });
+
+            Visible = (Button)rootView.findViewById(R.id.button2);
+            Visible.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent getVisible = new Intent(BluetoothAdapter.
+                            ACTION_REQUEST_DISCOVERABLE);
+                    startActivityForResult(getVisible, 0);
+                }
+            });
+
+            list = (Button)rootView.findViewById(R.id.button3);
+            list.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    pairedDevices = BA.getBondedDevices();
+
+                    ArrayList list = new ArrayList();
+                    for(BluetoothDevice bt : pairedDevices)
+                        list.add(bt.getName());
+
+                    Toast.makeText(getActivity(),"Showing Paired Devices",
+                            Toast.LENGTH_SHORT).show();
+                    final ArrayAdapter adapter = new ArrayAdapter
+                            (getActivity(),android.R.layout.simple_list_item_1, list);
+                    lv.setAdapter(adapter);
+                }
+            });
+
+            lv = (ListView)rootView.findViewById(R.id.listView1);
+
+            BA = BluetoothAdapter.getDefaultAdapter();
 
             getActivity().setTitle("Bluetooth Setup");
-            BA = BluetoothAdapter.getDefaultAdapter();
-            BA.enable();
-
-            Intent turnOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(turnOn, 0);
-
-            Intent getVisible = new Intent(BluetoothAdapter.
-                    ACTION_REQUEST_DISCOVERABLE);
-            startActivityForResult(getVisible, 0);
-
             return rootView;
+        }
+
+        @Override
+        public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
+            // Inflate the menu; this adds items to the action bar if it is present.
+            menuInflater.inflate(R.menu.main, menu);
+            super.onCreateOptionsMenu(menu, menuInflater);
         }
     }
 
