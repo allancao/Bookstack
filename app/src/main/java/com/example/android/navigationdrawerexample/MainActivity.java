@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.SearchManager;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -172,7 +173,7 @@ public class MainActivity extends Activity {
         if (position == 0) {
             fragmentManager.beginTransaction().replace(R.id.content_frame, graph).commit();
         } else if (position == 5) {
-            fragmentManager.beginTransaction().replace((R.id.content_frame, blueToothPair).commit());
+            fragmentManager.beginTransaction().replace(R.id.content_frame, blueToothPair).commit();
         } else {
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
         }
@@ -234,8 +235,8 @@ public class MainActivity extends Activity {
     }
 
     public static class BlueToothFragment extends Fragment {
-        public static final String ARG_PLANET_NUMBER = "planet_number";
 
+        private BluetoothAdapter BA;
         public BlueToothFragment() {
             // Empty constructor required for fragment subclasses
         }
@@ -244,13 +245,24 @@ public class MainActivity extends Activity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_planet, container, false);
-            int i = getArguments().getInt(ARG_PLANET_NUMBER);
-            String planet = getResources().getStringArray(R.array.nav_drawer_items)[i];
 
-            int imageId = getResources().getIdentifier(planet.toLowerCase(Locale.getDefault()),
-                    "drawable", getActivity().getPackageName());
-            ((ImageView) rootView.findViewById(R.id.image)).setImageResource(imageId);
-            getActivity().setTitle(planet);
+//            int i = getArguments().getInt(ARG_PLANET_NUMBER);
+//            String planet = getResources().getStringArray(R.array.nav_drawer_items)[i];
+//            int imageId = getResources().getIdentifier(planet.toLowerCase(Locale.getDefault()),
+//                    "drawable", getActivity().getPackageName());
+//            ((ImageView) rootView.findViewById(R.id.image)).setImageResource(imageId);
+
+            getActivity().setTitle("Bluetooth Setup");
+            BA = BluetoothAdapter.getDefaultAdapter();
+            BA.enable();
+
+            Intent turnOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(turnOn, 0);
+
+            Intent getVisible = new Intent(BluetoothAdapter.
+                    ACTION_REQUEST_DISCOVERABLE);
+            startActivityForResult(getVisible, 0);
+
             return rootView;
         }
     }
