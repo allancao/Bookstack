@@ -23,6 +23,7 @@
         <item>Write a review</item>
         <item>Share</item>
         <item>Pair Device</item>
+        <item>Data Transfer Test</item>
     </string-array>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
@@ -35,5 +36,9 @@
     <string name="off">Turn Off</string>
     <string name="Visible">Get Visible</string>
     <string name="List">List Devices</string>
+
+    <string name="app_title">USB Serial Testing</string>
+    <string name="app_name_serial">Serial Testing</string>
+    <string name="refreshing">Refreshing...</string>
 
 </resources>

@@ -34,11 +34,6 @@ public class Graph extends Fragment {
         View rootView = inflater.inflate(R.layout.graph, container, false);
         plot = (XYPlot) rootView.findViewById(R.id.mySimpleXYPlot);
 
-//            plot.setBorderStyle(Plot.BorderStyle.NONE, null, null);
-//            plot.setPlotMargins(0, 0, 0, 0);
-//            plot.setPlotPadding(0, 0, 0, 0);
-//            plot.setGridPadding(0, 0, 0, 0);
-
         Number[] days =   { 1  , 2   , 3   , 4   , 5   , 6   , 7 };
         Number[] values = { 10, 30, 40, 60, 100, 95, 70};
 
@@ -55,13 +50,7 @@ public class Graph extends Fragment {
         format.getLinePaint().setStrokeWidth(5);
         format.getVertexPaint().setStrokeWidth(10);
 
-//            LineAndPointFormatter format = new LineAndPointFormatter();
-//            format.setPointLabelFormatter(new PointLabelFormatter());
-//            format.configure(getActivity(), R.xml.line_point_formatter_with_plf1);
         plot.addSeries(mySeries, format);
-
-//            plot.getGraphWidget().getBackgroundPaint().setColor(Color.WHITE);
-//            plot.getGraphWidget().getGridBackgroundPaint().setColor(Color.WHITE);
 
         plot.getGraphWidget().getDomainOriginLabelPaint().setColor(Color.BLACK);
         plot.getGraphWidget().getDomainOriginLinePaint().setColor(Color.BLACK);

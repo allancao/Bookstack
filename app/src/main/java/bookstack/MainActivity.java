@@ -157,6 +157,8 @@ public class MainActivity extends Activity {
             fragmentManager.beginTransaction().replace(R.id.content_frame, graph).commit();
         } else if (position == 5) {
             fragmentManager.beginTransaction().replace(R.id.content_frame, blueToothPair).commit();
+        } else if (position == 6) {
+            startActivity(new Intent(getBaseContext(), DeviceListActivity.class));
         } else {
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
         }

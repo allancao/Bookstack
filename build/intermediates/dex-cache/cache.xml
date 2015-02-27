@@ -2,6 +2,13 @@
 <items version="2" >
 
     <item
+        jar="C:\Users\Cain\AndroidStudioProjects\Bookstackv2\app\build\intermediates\exploded-aar\com.hoho.android\usbSerialForAndroid\0.2.0-SNAPSHOT\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="583488f06a626e153cc02dad8caec82efff100a3">
+        <dex dex="C:\Users\Cain\AndroidStudioProjects\Bookstackv2\app\build\intermediates\pre-dexed\debug\classes-1f499e1acb57437ae2fcddbdb09bb5708276dc8b.jar" />
+    </item>
+    <item
         jar="C:\Users\Cain\AndroidStudioProjects\Bookstackv2\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
         jumboMode="false"
         revision="21.1.2"
