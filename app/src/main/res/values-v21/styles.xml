@@ -1,0 +1,15 @@
+<!-- res/values/styles.xml -->
+<resources>
+    <color name="google_green">#00933B</color>
+    <color name="white_bg">#FFFFFF</color>
+    <!-- your theme inherits from the material theme -->
+    <style name="AppTheme" parent="android:Theme.Material">
+        <item name="android:colorPrimary">@color/google_green</item>
+        <!--   darker variant for the status bar and contextual app bars -->
+        <!--<item name="android:colorPrimaryDark">@color/google_green</item>-->
+        <!--   theme UI controls like checkboxes and text fields -->
+        <item name="android:colorAccent">@color/google_green</item>
+        <item name="android:windowBackground">@color/white_bg</item>
+        <item name="android:colorBackground">@color/white_bg</item>
+    </style>
+</resources>
