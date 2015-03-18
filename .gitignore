@@ -35,3 +35,10 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+local.properties
+
+# Directories #
+###############
+app/build/
+.idea/
+.gradle/
