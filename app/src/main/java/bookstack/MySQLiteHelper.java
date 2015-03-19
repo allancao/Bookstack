@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import bookstack.Book;
+import bookstack.ReadPeriod;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -18,7 +19,7 @@ import android.util.Log;
 public class MySQLiteHelper extends SQLiteOpenHelper {
 
     // Database Version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 4;
     // Database Name
     private static final String DATABASE_NAME = "BookDB";
 
@@ -34,14 +35,26 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 "title TEXT, "+
                 "author TEXT )";
 
+        String CREATE_READPERIOD_TABLE = "CREATE TABLE ReadPeriod ( " +
+                "rp_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "start INTEGER, "+
+                "end INTEGER, "+
+                "percent INTEGER, "+
+                "startForce INTEGER, "+
+                "endForce INTEGER,"+
+                "fk_bookId INTEGER," +
+                    " FOREIGN KEY(fk_bookId) REFERENCES books(id) ) ";
+
         // create books table
         db.execSQL(CREATE_BOOK_TABLE);
+        db.execSQL(CREATE_READPERIOD_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older books table if existed
         db.execSQL("DROP TABLE IF EXISTS books");
+        db.execSQL("DROP TABLE IF EXISTS ReadPeriod");
 
         // create fresh books table
         this.onCreate(db);
@@ -184,5 +197,43 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
         Log.d("deleteBook", book.toString());
 
+    }
+
+    // READPERIODS
+
+    // readPeriods table name
+//    private static final String TABLE_READPERIODS = "readPeriods";
+
+    // Books Table Columns names
+//    private static final String RP_KEY_ID = "id";
+//    private static final String RP_KEY_BOOKID = "bookId";
+//    private static final String RP_KEY_START = "start";
+
+//    private static final String[] RP_COLUMNS = {KEY_ID,KEY_TITLE,KEY_AUTHOR};
+
+    public void addReadPeriod(ReadPeriod rp){
+        Log.d("addRP0", "addRP0");
+        Log.d("addRP1", Integer.toString(rp.getStart()));
+        Log.d("addRP2", Integer.toString(rp.getEnd()));
+
+        // 1. get reference to writable DB
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // 2. create ContentValues to add key "column"/value
+        ContentValues values = new ContentValues();
+        values.put("fk_bookId", rp.getBookId());
+        values.put("start", rp.getStart());
+        values.put("end", rp.getEnd());
+        values.put("percent", rp.getPercent());
+        values.put("startForce", rp.getStartForce());
+        values.put("endForce", rp.getEndForce());
+
+        // 3. insert
+        db.insert("ReadPeriod", // table
+                null, //nullColumnHack
+                values); // key/value -> keys = column names/ values = column values
+
+        // 4. close
+        db.close();
     }
 }

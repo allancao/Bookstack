@@ -7,21 +7,21 @@ import java.util.Date;
  */
 public class ReadPeriod {
     private int id;
-    private Integer bookId;
-    private Date start;
-    private Date end;
-    private Integer percent;
-    private Integer startForce;
-    private Integer endForce;
+    private int bookId;
+    private int start;
+    private int end;
+    private int percent;
+    private int startForce;
+    private int endForce;
 
     public ReadPeriod(){}
 
-    public ReadPeriod(Integer bookId,
-            Date start,
-            Date end,
-            Integer percent,
-            Integer startForce,
-            Integer endForce) {
+    public ReadPeriod(int bookId,
+            int start,
+            int end,
+            int percent,
+            int startForce,
+            int endForce) {
         super();
         this.bookId = bookId;
         this.start = start;
@@ -32,4 +32,27 @@ public class ReadPeriod {
 
     }
 
+    public int getStart() {
+        return start;
+    }
+
+    public int getEnd() {
+        return end;
+    }
+
+    public int getBookId() {
+        return bookId;
+    }
+
+    public int getPercent() {
+        return percent;
+    }
+
+    public int getStartForce() {
+        return startForce;
+    }
+
+    public int getEndForce() {
+        return endForce;
+    }
 }

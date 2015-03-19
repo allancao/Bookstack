@@ -116,6 +116,17 @@ public class MainActivity extends Activity {
 
         // get all books
         db.getAllBooks();
+
+//        Log.d("ttt", )
+
+        db.addReadPeriod(new ReadPeriod(
+            1,
+            1420074061,
+            1420080000,
+            10,
+            3,
+            2
+        ));
     }
 
     @Override
