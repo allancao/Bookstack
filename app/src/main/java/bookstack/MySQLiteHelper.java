@@ -19,7 +19,7 @@ import android.util.Log;
 public class MySQLiteHelper extends SQLiteOpenHelper {
 
     // Database Version
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 7;
     // Database Name
     private static final String DATABASE_NAME = "BookDB";
 
@@ -238,11 +238,23 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     }
 
     public List<ReadPeriod> getAllReadPeriod() {
+        return getAllReadPeriod(0);
+    }
+
+    public List<ReadPeriod> getAllReadPeriod(int fk_bookId) {
+        // bookId of 0 means get all books
+
         List<ReadPeriod> rps = new LinkedList<ReadPeriod>();
 
         // 1. build the query
-        String query = "SELECT  * FROM " + "ReadPeriod";
+        String query = "";
 
+        if (fk_bookId == 0) {
+            query = "SELECT  * FROM " + "ReadPeriod";
+        }
+        else {
+            query = "SELECT  * FROM " + "ReadPeriod" + " WHERE fk_bookId = " + Integer.toString(fk_bookId);
+        }
         // 2. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
@@ -266,6 +278,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         }
 
         Log.d("getAllReadPeriod()", rps.toString());
+        Log.d("getAllReadPeriod bookid", Integer.toString(fk_bookId));
 
         // return books
         return rps;

@@ -116,15 +116,35 @@ public class MainActivity extends Activity {
 
         // READ PERIOD
         db.addReadPeriod(new ReadPeriod(
-            1,
             1420074061,
             1420080000,
             10,
-            3,
+            30,
+            28,
+            1
+        ));
+
+        db.addReadPeriod(new ReadPeriod(
+            1520074061,
+            1520080000,
+            12,
+            28,
+            26,
+            1
+        ));
+
+        db.addReadPeriod(new ReadPeriod(
+            1520074061,
+            1520080000,
+            5,
+            300,
+            297,
             2
         ));
 
         db.getAllReadPeriod();
+        db.getAllReadPeriod(1);
+        db.getAllReadPeriod(2);
     }
 
     @Override

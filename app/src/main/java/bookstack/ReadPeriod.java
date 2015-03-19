@@ -16,12 +16,13 @@ public class ReadPeriod {
 
     public ReadPeriod(){}
 
-    public ReadPeriod(int bookId,
+    public ReadPeriod(
             int start,
             int end,
             int percent,
             int startForce,
-            int endForce) {
+            int endForce,
+            int bookId) {
         super();
         this.bookId = bookId;
         this.start = start;
