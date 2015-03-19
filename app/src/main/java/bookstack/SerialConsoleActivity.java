@@ -61,6 +61,9 @@ public class SerialConsoleActivity extends Activity {
      */
     private static UsbSerialPort sPort = null;
 
+    private Long currentTimestamp = 0L;
+    private Long previousTimestamp = 0L;
+
     private TextView mTitleTextView;
     private TextView mDumpTextView;
     private ScrollView mScrollView;
@@ -169,9 +172,21 @@ public class SerialConsoleActivity extends Activity {
     }
 
     private void updateReceivedData(byte[] data) {
+        StringBuilder print = new StringBuilder();
         String s = new String(data);
-        mDumpTextView.append(s);
+        Long timestamp = Long.valueOf(s.split(",")[0]);
+        int state = Integer.valueOf(s.split(",")[1].substring(0, 1));
+        currentTimestamp = timestamp;
+        Long timeRead = currentTimestamp - previousTimestamp;
+        previousTimestamp = currentTimestamp;
 
+        if (state == 0) {
+            print.append("Book Closed -----").append("Time since:\t").append(timeRead);
+        } else if (state == 1) {
+            print.append("Book Opened -----").append("Time since:\t").append(timeRead);
+        }
+
+        mDumpTextView.append(print.toString() + "\n\n");
         mScrollView.smoothScrollTo(0, mDumpTextView.getBottom());
     }
 

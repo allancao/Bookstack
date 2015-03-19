@@ -21,8 +21,6 @@
 
     <uses-sdk android:minSdkVersion="15" android:targetSdkVersion="17" />
 
-
-
     <application
         android:label="@string/app_name"
         android:theme="@style/AppTheme">

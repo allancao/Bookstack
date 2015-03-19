@@ -14,6 +14,7 @@ import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
 import com.androidplot.xy.XYStepMode;
+
 import bookstack.R;
 
 import java.text.DecimalFormat;

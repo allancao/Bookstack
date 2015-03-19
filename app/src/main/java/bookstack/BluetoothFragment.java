@@ -6,23 +6,25 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.os.Handler;
+import android.widget.Toast;
 
 import bookstack.R;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
 
@@ -31,7 +33,6 @@ public class BluetoothFragment extends Fragment {
     TextView myLabel;
     EditText myTextbox;
     BluetoothAdapter mBluetoothAdapter;
-    BluetoothSocket mmSocket;
     BluetoothDevice mmDevice;
     OutputStream mmOutputStream;
     InputStream mmInputStream;
@@ -40,6 +41,7 @@ public class BluetoothFragment extends Fragment {
     int readBufferPosition;
     int counter;
     volatile boolean stopWorker;
+    static BluetoothSerialService mSerialService = null;
 
     public BluetoothFragment() {
         // Empty constructor required for fragment subclasses
@@ -54,6 +56,8 @@ public class BluetoothFragment extends Fragment {
         Button openButton = (Button)rootView.findViewById(R.id.open);
         Button sendButton = (Button)rootView.findViewById(R.id.send);
         Button closeButton = (Button)rootView.findViewById(R.id.close);
+        mSerialService = new BluetoothSerialService(rootView.getContext());
+
         myLabel = (TextView)rootView.findViewById(R.id.label);
         myTextbox = (EditText)rootView.findViewById(R.id.entry);
 
@@ -115,7 +119,7 @@ public class BluetoothFragment extends Fragment {
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
         if(pairedDevices.size() > 0) {
             for(BluetoothDevice device : pairedDevices) {
-                if (device.getName().equals("Nexus 4") || device.getName().equals("CAIN-X1")) {
+                if (device.getName().equals("SeeedBTSlave")) {
                     mmDevice = device;
                     break;
                 }
@@ -208,7 +212,6 @@ public class BluetoothFragment extends Fragment {
         stopWorker = true;
         mmOutputStream.close();
         mmInputStream.close();
-        mmSocket.close();
         myLabel.setText("Bluetooth Closed");
     }
 
