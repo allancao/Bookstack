@@ -1,3 +1,6 @@
+// Code From:
+// http://hmkcode.com/android-simple-sqlite-database-tutorial/
+
 package bookstack;
 
 import java.util.LinkedList;
