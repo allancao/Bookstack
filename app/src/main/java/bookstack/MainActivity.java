@@ -97,12 +97,9 @@ public class MainActivity extends Activity {
             selectItem(0);
         }
 
-        // DB TEST
+        // DB TEST CASES. can comment out. please keep.
         MySQLiteHelper db = new MySQLiteHelper(this);
 
-        /**
-         * CRUD Operations
-         * */
         // add Books
         db.addBook(new Book("Android Application Development Cookbook", "Wei Meng Lee"));
         db.addBook(new Book("Android Programming: The Big Nerd Ranch Guide", "Bill Phillips and Brian Hardy"));
@@ -117,8 +114,7 @@ public class MainActivity extends Activity {
         // get all books
         db.getAllBooks();
 
-//        Log.d("ttt", )
-
+        // READ PERIOD
         db.addReadPeriod(new ReadPeriod(
             1,
             1420074061,
