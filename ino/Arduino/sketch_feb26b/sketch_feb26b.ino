@@ -66,10 +66,10 @@ void loop()
   for (int i = 0; i<10; i++)
 {
   delay(500);
-  //Serial.println(sum);
+  //Serial.println(DoMeasurement());
   sum = sum + abs(DoMeasurement());
 }     
-  if ((9 <= (sum/10)) && (sum/10 <10)) 
+  if ((7 <= (sum/10)) && (sum/10 <11)) 
   {
   //Serial.println(sum/10);
   reading = 1;
@@ -80,7 +80,7 @@ void loop()
 }
   
   if (reading != HISTORY){
-   Serial.print(now());
+   Serial.print(now()); 
    Serial.print(",");
    Serial.print(reading);
    Serial.println();
