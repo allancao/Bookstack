@@ -127,6 +127,8 @@ public class MainActivity extends Activity {
             3,
             2
         ));
+
+        db.getAllReadPeriod();
     }
 
     @Override

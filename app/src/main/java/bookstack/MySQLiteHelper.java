@@ -19,7 +19,7 @@ import android.util.Log;
 public class MySQLiteHelper extends SQLiteOpenHelper {
 
     // Database Version
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 6;
     // Database Name
     private static final String DATABASE_NAME = "BookDB";
 
@@ -235,5 +235,39 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
         // 4. close
         db.close();
+    }
+
+    public List<ReadPeriod> getAllReadPeriod() {
+        List<ReadPeriod> rps = new LinkedList<ReadPeriod>();
+
+        // 1. build the query
+        String query = "SELECT  * FROM " + "ReadPeriod";
+
+        // 2. get reference to writable DB
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        // 3. go over each row, build book and add it to list
+        ReadPeriod rp = null;
+        if (cursor.moveToFirst()) {
+            do {
+                rp = new ReadPeriod();
+                rp.setId(Integer.parseInt(cursor.getString(0)));
+                rp.setStart(Integer.parseInt(cursor.getString(1)));
+                rp.setEnd(Integer.parseInt(cursor.getString(2)));
+                rp.setPercent(Integer.parseInt(cursor.getString(3)));
+                rp.setStartForce(Integer.parseInt(cursor.getString(4)));
+                rp.setEndForce(Integer.parseInt(cursor.getString(5)));
+                rp.setBookId(Integer.parseInt(cursor.getString(6)));
+
+                // Add book to books
+                rps.add(rp);
+            } while (cursor.moveToNext());
+        }
+
+        Log.d("getAllReadPeriod()", rps.toString());
+
+        // return books
+        return rps;
     }
 }
