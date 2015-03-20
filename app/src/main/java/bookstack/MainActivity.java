@@ -38,6 +38,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+import java.util.List;
 
 import bookstack.R;
 
@@ -95,6 +96,55 @@ public class MainActivity extends Activity {
         if (savedInstanceState == null) {
             selectItem(0);
         }
+
+        // DB TEST CASES. can comment out. please keep.
+        MySQLiteHelper db = new MySQLiteHelper(this);
+
+        // add Books
+        db.addBook(new Book("Android Application Development Cookbook", "Wei Meng Lee"));
+        db.addBook(new Book("Android Programming: The Big Nerd Ranch Guide", "Bill Phillips and Brian Hardy"));
+        db.addBook(new Book("Learn Android App Development", "Wallace Jackson"));
+
+        // get all books
+        List<Book> list = db.getAllBooks();
+
+        // delete one book
+        db.deleteBook(list.get(0));
+
+        // get all books
+        db.getAllBooks();
+
+        // READ PERIOD
+        db.addReadPeriod(new ReadPeriod(
+            1420074061,
+            1420080000,
+            10,
+            30,
+            28,
+            1
+        ));
+
+        db.addReadPeriod(new ReadPeriod(
+            1520074061,
+            1520080000,
+            12,
+            28,
+            26,
+            1
+        ));
+
+        db.addReadPeriod(new ReadPeriod(
+            1520074061,
+            1520080000,
+            5,
+            300,
+            297,
+            2
+        ));
+
+        db.getAllReadPeriod();
+        db.getAllReadPeriod(1);
+        db.getAllReadPeriod(2);
     }
 
     @Override
