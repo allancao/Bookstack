@@ -12,10 +12,10 @@ import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
-public class RecommendationsFragment extends Fragment {
+public class WeekFragment extends Fragment {
     public static final String ARG_PLANET_NUMBER = "planet_number";
 
-    public RecommendationsFragment() {
+    public WeekFragment() {
         // Empty constructor required for fragment subclasses
     }
 
