@@ -38,9 +38,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-import java.util.List;
-
 import bookstack.R;
+import java.util.List;
+import android.view.LayoutInflater;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
+import android.widget.PopupWindow;
+
+import java.util.List;
 
 public class MainActivity extends Activity {
     private DrawerLayout mDrawerLayout;
@@ -200,13 +205,22 @@ public class MainActivity extends Activity {
         // update the main content by replacing fragments
         Fragment fragment = new PlanetFragment();
         Fragment graph = new Graph();
+        Fragment reco = new RecommendationFragment();
         Fragment blueToothPair = new BluetoothFragment();
+        Fragment week = new WeekFragment();
+        Fragment progress = new ProgressFragment();
         Bundle args = new Bundle();
         args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
         fragment.setArguments(args);
 
         FragmentManager fragmentManager = getFragmentManager();
         if (position == 0) {
+            fragmentManager.beginTransaction().replace(R.id.content_frame, progress).commit();
+        } else if (position == 1) {
+            fragmentManager.beginTransaction().replace(R.id.content_frame, reco).commit();
+        } else if (position == 2) {
+            fragmentManager.beginTransaction().replace(R.id.content_frame, week).commit();
+        } else if (position == 3) {
             fragmentManager.beginTransaction().replace(R.id.content_frame, graph).commit();
         } else if (position == 5) {
             fragmentManager.beginTransaction().replace(R.id.content_frame, blueToothPair).commit();
@@ -246,5 +260,6 @@ public class MainActivity extends Activity {
         // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
+
 }
 
