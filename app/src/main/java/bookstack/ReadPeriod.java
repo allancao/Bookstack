@@ -1,14 +1,12 @@
 package bookstack;
 
-import java.util.Date;
-
 /**
  * Created by davintwong on 3/18/15.
  */
 public class ReadPeriod {
     private int id;
-    private int start;
-    private int end;
+    private long start;
+    private long end;
     private int percent;
     private int startForce;
     private int endForce;
@@ -17,8 +15,8 @@ public class ReadPeriod {
     public ReadPeriod(){}
 
     public ReadPeriod(
-            int start,
-            int end,
+            long start,
+            long end,
             int percent,
             int startForce,
             int endForce,
@@ -33,11 +31,11 @@ public class ReadPeriod {
 
     }
 
-    public int getStart() {
+    public long getStart() {
         return start;
     }
 
-    public int getEnd() {
+    public long getEnd() {
         return end;
     }
 
@@ -62,11 +60,11 @@ public class ReadPeriod {
         this.id = id;
     }
 
-    public void setStart(int start) {
+    public void setStart(long start) {
         this.start = start;
     }
 
-    public void setEnd(int end) {
+    public void setEnd(long end) {
         this.end = end;
     }
 

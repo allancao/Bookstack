@@ -3,12 +3,6 @@
 
 package bookstack;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import bookstack.Book;
-import bookstack.ReadPeriod;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -16,10 +10,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class MySQLiteHelper extends SQLiteOpenHelper {
 
     // Database Version
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 8;
     // Database Name
     private static final String DATABASE_NAME = "BookDB";
 
@@ -213,8 +210,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
     public void addReadPeriod(ReadPeriod rp){
         Log.d("addRP0", "addRP0");
-        Log.d("addRP1", Integer.toString(rp.getStart()));
-        Log.d("addRP2", Integer.toString(rp.getEnd()));
+        Log.d("addRP1", Long.toString(rp.getStart()));
+        Log.d("addRP2", Long.toString(rp.getEnd()));
 
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
@@ -265,8 +262,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             do {
                 rp = new ReadPeriod();
                 rp.setId(Integer.parseInt(cursor.getString(0)));
-                rp.setStart(Integer.parseInt(cursor.getString(1)));
-                rp.setEnd(Integer.parseInt(cursor.getString(2)));
+                rp.setStart(Long.parseLong(cursor.getString(1)));
+                rp.setEnd(Long.parseLong(cursor.getString(2)));
                 rp.setPercent(Integer.parseInt(cursor.getString(3)));
                 rp.setStartForce(Integer.parseInt(cursor.getString(4)));
                 rp.setEndForce(Integer.parseInt(cursor.getString(5)));

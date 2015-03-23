@@ -3,24 +3,17 @@ package bookstack;
 import android.app.Fragment;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
-import android.util.Log;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.os.Handler;
-import android.widget.Toast;
-
-import bookstack.R;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,7 +32,6 @@ public class BluetoothFragment extends Fragment {
     Thread workerThread;
     byte[] readBuffer;
     int readBufferPosition;
-    int counter;
     volatile boolean stopWorker;
     static BluetoothSerialService mSerialService = null;
 
@@ -54,12 +46,10 @@ public class BluetoothFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         Button openButton = (Button)rootView.findViewById(R.id.open);
-        Button sendButton = (Button)rootView.findViewById(R.id.send);
         Button closeButton = (Button)rootView.findViewById(R.id.close);
         mSerialService = new BluetoothSerialService(rootView.getContext());
 
         myLabel = (TextView)rootView.findViewById(R.id.label);
-        myTextbox = (EditText)rootView.findViewById(R.id.entry);
 
         //Open Button
         openButton.setOnClickListener(new View.OnClickListener()
@@ -70,19 +60,6 @@ public class BluetoothFragment extends Fragment {
                 {
                     findBT();
                     openBT();
-                }
-                catch (IOException ex) { }
-            }
-        });
-
-        //Send Button
-        sendButton.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
-                try
-                {
-                    sendData();
                 }
                 catch (IOException ex) { }
             }

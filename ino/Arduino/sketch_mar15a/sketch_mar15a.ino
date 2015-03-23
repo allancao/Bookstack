@@ -1,31 +1,54 @@
 #include <SoftwareSerial.h>
 #define RxD 2
 #define TxD 3
+#define NOFIELD 505L    // Analog output with no applied field, calibrate this
+// Uncomment one of the lines below according to device in use A1301 or A1302
+// This is used to convert the analog voltage reading to milliGauss
+#define TOMILLIGAUSS 1953L  // For A1301: 2.5mV = 1Gauss, and 1024 analog steps = 5V, so 1 step = 1953mG
+// #define TOMILLIGAUSS 3756L  // For A1302: 1.3mV = 1Gauss, and 1024 analog steps = 5V, so 1 step = 3756mG
+
  
 SoftwareSerial blueToothSerial(RxD,TxD);
- 
+boolean HISTORY;
+String DATA;
+
 void setup()
 {
   Serial.begin(9600);
   pinMode(RxD, INPUT);
   pinMode(TxD, OUTPUT);
   setupBlueToothConnection();
+  
+  if (DoMeasurement(A0)==9) HISTORY = 1;  
+  blueToothSerial.println(HISTORY);
 }
  
 void loop()
-{
-  char recvChar;
-  while(1){
-    if(blueToothSerial.available()){
-      recvChar = blueToothSerial.read();
-      Serial.print(recvChar);
-    }
-    if(Serial.available()){
-      recvChar  = Serial.read();
-      blueToothSerial.print(recvChar);
-    }
-  }
+{  
+  delay(500);
+  DoMeasurement(A0);       
 }
+
+long DoMeasurement(int pin)
+{
+// measure magnetic field
+  int raw = analogRead(pin);   // Range : 0..1024
+
+//  Uncomment this to get a raw reading for calibration of no-field point
+//  Serial.print("Raw reading: ");
+//  Serial.println(raw);
+
+  long compensated = raw - NOFIELD;                 // adjust relative to no applied field 
+  long gauss = compensated * TOMILLIGAUSS / 1000;   // adjust scale to Gauss
+
+//  Serial.println(raw);
+  Serial.println(gauss);
+  blueToothSerial.println(gauss);
+  
+  return gauss;
+}
+
+
  
 void setupBlueToothConnection()
 {

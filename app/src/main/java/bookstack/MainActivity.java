@@ -20,11 +20,12 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.SearchManager;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -33,14 +34,22 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-import java.util.List;
 
-import bookstack.R;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+
+import bookstack.Tools.Statistics;
 
 public class MainActivity extends Activity {
     private DrawerLayout mDrawerLayout;
@@ -50,6 +59,17 @@ public class MainActivity extends Activity {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private String[] mPlanetTitles;
+
+    //Bluetooth
+    BluetoothAdapter mBluetoothAdapter;
+    BluetoothDevice mmDevice;
+    OutputStream mmOutputStream;
+    InputStream mmInputStream;
+    Thread workerThread;
+    byte[] readBuffer;
+    int readBufferPosition;
+    volatile boolean stopWorker;
+    static BluetoothSerialService mSerialService = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +165,14 @@ public class MainActivity extends Activity {
         db.getAllReadPeriod();
         db.getAllReadPeriod(1);
         db.getAllReadPeriod(2);
+
+        try {
+            findBT();
+            openBT();
+
+        } catch(IOException e) {
+            Log.e("BT Error", "Could not open bt");
+        }
     }
 
     @Override
@@ -245,6 +273,166 @@ public class MainActivity extends Activity {
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    public void findBT() {
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if(mBluetoothAdapter == null) {
+            Log.e("BT", "bt adapter not available");
+        }
+
+        if(!mBluetoothAdapter.isEnabled()) {
+            Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBluetooth, 0);
+        }
+
+        Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
+        if(pairedDevices.size() > 0) {
+            for(BluetoothDevice device : pairedDevices) {
+                if (device.getName().equals("SeeedBTSlave")) {
+                    mmDevice = device;
+                    break;
+                }
+            }
+        }
+        Log.d("BT", "BT Connected");
+    }
+
+    public void openBT() throws IOException {
+        UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); //Standard SerialPortService ID
+
+        mmDevice.fetchUuidsWithSdp();
+        BluetoothConnector bluetoothConnector = new BluetoothConnector(mmDevice, false, mBluetoothAdapter, null);
+        BluetoothConnector.BluetoothSocketWrapper wrapper = bluetoothConnector.connect();
+
+        mmOutputStream = wrapper.getOutputStream();
+        mmInputStream = wrapper.getInputStream();
+
+        beginListenForData();
+
+        Log.d("BT", "BT Opened");
+    }
+
+    public void beginListenForData() {
+        final Handler handler = new Handler();
+        final byte delimiter = 10; //This is the ASCII code for a newline character
+
+        stopWorker = false;
+        readBufferPosition = 0;
+        readBuffer = new byte[1024];
+        workerThread = new Thread(new Runnable()
+        {
+            public void run()
+            {
+                final MySQLiteHelper db = new MySQLiteHelper(getApplicationContext());
+                Date utilDate = Calendar.getInstance().getTime();
+                LinkedList<Integer> average = new LinkedList<>();
+                boolean opened = false;
+                while(average.size() < 20) {
+                    try {
+                        int bytesAvailable = mmInputStream.available();
+                        if (bytesAvailable > 0) {
+                            byte[] packetBytes = new byte[bytesAvailable];
+                            mmInputStream.read(packetBytes);
+                            String data = "";
+                            for (int i = 0; i < bytesAvailable; i++) {
+                                byte b = packetBytes[i];
+                                if (b == delimiter) {
+                                    byte[] encodedBytes = new byte[readBufferPosition];
+                                    System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length);
+                                    data = new String(encodedBytes, "US-ASCII");
+                                    readBufferPosition = 0;
+                                } else {
+                                    readBuffer[readBufferPosition++] = b;
+                                }
+                            }
+                            if (!data.isEmpty()) {
+                                average.add(Integer.parseInt(data.substring(0, data.length()-1)));
+                            }
+                        }
+                    }
+                    catch (IOException e)
+                    {
+                        Log.e("BT", e.getMessage());
+                        stopWorker = true;
+                    }
+                }
+
+
+                if (isOpen(average)) {
+                    opened = true;
+                }
+
+                while(!Thread.currentThread().isInterrupted() && !stopWorker)
+                {
+                    try
+                    {
+                        int bytesAvailable = mmInputStream.available();
+                        if(bytesAvailable > 0)
+                        {
+                            byte[] packetBytes = new byte[bytesAvailable];
+                            mmInputStream.read(packetBytes);
+                            String data = "";
+                            for(int i=0;i<bytesAvailable;i++) {
+                                byte b = packetBytes[i];
+                                if(b == delimiter) {
+                                    byte[] encodedBytes = new byte[readBufferPosition];
+                                    System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length);
+                                    data = new String(encodedBytes, "US-ASCII");
+                                    readBufferPosition = 0;
+                                }
+                                else {
+                                    readBuffer[readBufferPosition++] = b;
+                                }
+                            }
+                            if (!data.isEmpty()) {
+                                if (average.size() >= 20) {
+                                    average.add(Integer.parseInt(data.substring(0, data.length() - 1)));
+                                    average.removeFirst();
+
+                                    if (isOpen(average) && !opened) {
+                                        utilDate = Calendar.getInstance().getTime();
+                                        opened = true;
+                                        Log.d("BT", "BOOK IS OPENED");
+                                    } else if (!isOpen(average) && opened) {
+                                        final long startTime = utilDate.getTime();
+                                        final long endTime = Calendar.getInstance().getTime().getTime();
+                                        handler.post(new Runnable() {
+                                            public void run() {
+                                                db.addReadPeriod(new ReadPeriod(
+                                                        startTime,
+                                                        endTime,
+                                                        12,
+                                                        28,
+                                                        26,
+                                                        1
+                                                ));
+                                            }
+                                        });
+                                        Log.d("BT", "Start time: " + startTime + " End time: " + endTime);
+                                        Log.d("BT", "BOOK IS CLOSED");
+                                        opened = false;
+                                    }
+                                } else {
+                                    average.add(Integer.parseInt(data.substring(0, data.length() - 1)));
+                                }
+                            }
+                        }
+                    }
+                    catch (IOException ex)
+                    {
+                        Log.e("BT", ex.getMessage());
+                        stopWorker = true;
+                    }
+                }
+            }
+        });
+
+        workerThread.start();
+    }
+
+    public boolean isOpen(List<Integer> list) {
+        return Statistics.median(list) < 20;
     }
 }
 
