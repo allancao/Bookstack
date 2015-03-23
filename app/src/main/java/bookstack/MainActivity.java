@@ -112,9 +112,9 @@ public class MainActivity extends Activity {
         MySQLiteHelper db = new MySQLiteHelper(this);
 
         // add Books
-        db.addBook(new Book("Android Application Development Cookbook", "Wei Meng Lee"));
-        db.addBook(new Book("Android Programming: The Big Nerd Ranch Guide", "Bill Phillips and Brian Hardy"));
-        db.addBook(new Book("Learn Android App Development", "Wallace Jackson"));
+        db.addBook(new Book("Design Patterns", "Allan Cao"));
+//        db.addBook(new Book("Android Programming: The Big Nerd Ranch Guide", "Bill Phillips and Brian Hardy"));
+//        db.addBook(new Book("Learn Android App Development", "Wallace Jackson"));
 
         // get all books
         List<Book> list = db.getAllBooks();
@@ -125,19 +125,9 @@ public class MainActivity extends Activity {
         // get all books
         db.getAllBooks();
 
-        // READ PERIOD
         db.addReadPeriod(new ReadPeriod(
-            1420074061,
-            1420080000,
-            10,
-            30,
-            28,
-            1
-        ));
-
-        db.addReadPeriod(new ReadPeriod(
-            1520074061,
-            1520080000,
+            1426813200, // Mar 20 2015 1:00
+            1426816800, // Mar 20 2015 2:00
             12,
             28,
             26,
@@ -145,17 +135,36 @@ public class MainActivity extends Activity {
         ));
 
         db.addReadPeriod(new ReadPeriod(
-            1520074061,
-            1520080000,
+            1426899600, // Mar 21 2015 1:00
+            1426901400, // Mar 21 2015 1:30
             5,
             300,
             297,
-            2
+            1
+        ));
+
+        db.addReadPeriod(new ReadPeriod(
+            1426986000, // Mar 22 2015 1:00
+            1426993200, // Mar 22 2015 3:00
+            5,
+            300,
+            297,
+            1
+        ));
+
+        // READ PERIOD
+        db.addReadPeriod(new ReadPeriod(
+            1427072400, // Mar 23 2015 1:00
+            1427076000, // Mar 23 2015 2:00
+            10,
+            30,
+            28,
+            1
         ));
 
         db.getAllReadPeriod();
         db.getAllReadPeriod(1);
-        db.getAllReadPeriod(2);
+//        db.getAllReadPeriod(2);
 
         // POPUP TEST
         new Handler().postDelayed(new Runnable() {
