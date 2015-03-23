@@ -277,6 +277,7 @@ public class MainActivity extends Activity {
 
 
     // The method that displays the popup.
+    // http://mobilemancer.com/2011/01/08/popup-window-in-android/
     private PopupWindow pw;
     private void initiatePopupWindow() {
         try {
