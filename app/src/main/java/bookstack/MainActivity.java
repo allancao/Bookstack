@@ -44,8 +44,14 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.PopupWindow;
-
+import android.widget.LinearLayout;
 import java.util.List;
+import android.graphics.drawable.BitmapDrawable;
+import android.content.Context;
+import android.view.ViewGroup;
+import android.view.Gravity;
+import android.widget.TextView;
+import android.view.View.OnClickListener;
 
 public class MainActivity extends Activity {
     private DrawerLayout mDrawerLayout;
@@ -150,6 +156,14 @@ public class MainActivity extends Activity {
         db.getAllReadPeriod();
         db.getAllReadPeriod(1);
         db.getAllReadPeriod(2);
+
+        // POPUP TEST
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                initiatePopupWindow();
+            }
+        }, 100);
+
     }
 
     @Override
@@ -260,6 +274,40 @@ public class MainActivity extends Activity {
         // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
+
+
+    // The method that displays the popup.
+    // http://mobilemancer.com/2011/01/08/popup-window-in-android/
+    // start popup: initiatePopupWindow()
+    // hide popup: pw.dismiss();
+    private PopupWindow pw;
+    private void initiatePopupWindow() {
+        try {
+            //We need to get the instance of the LayoutInflater, use the context of this activity
+//            LayoutInflater inflater = (LayoutInflater) MainActivity.this
+//                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            //Inflate the view from a predefined XML layout
+            View layout = getLayoutInflater().inflate(R.layout.popup_layout,
+                    (ViewGroup) findViewById(R.id.popup_element));
+            // create a 300px width and 470px height PopupWindow
+            pw = new PopupWindow(layout, LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, true);
+            // display the popup in the center
+            pw.showAtLocation(layout, Gravity.CENTER, 0, 0);
+
+            Button cancelButton = (Button) layout.findViewById(R.id.hide_message_button);
+            cancelButton.setOnClickListener(cancel_button_click_listener);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private OnClickListener cancel_button_click_listener = new OnClickListener() {
+        public void onClick(View v) {
+            pw.dismiss();
+        }
+    };
 
 }
 
