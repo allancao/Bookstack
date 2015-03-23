@@ -22,8 +22,6 @@
         <item>Weekly Tracker</item>
         <item>Graph</item>
         <item>Share</item>
-        <item>Pair Device</item>
-        <item>Data Transfer Test</item>
     </string-array>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>

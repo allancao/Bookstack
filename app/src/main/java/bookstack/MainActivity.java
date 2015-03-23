@@ -26,18 +26,25 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.Toast;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -45,16 +52,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import android.widget.Button;
-import android.widget.PopupWindow;
-import android.widget.LinearLayout;
+import java.util.Set;
+import java.util.UUID;
+
 import bookstack.Tools.Statistics;
-import android.graphics.drawable.BitmapDrawable;
-import android.content.Context;
-import android.view.ViewGroup;
-import android.view.Gravity;
-import android.widget.TextView;
-import android.view.View.OnClickListener;
 
 public class MainActivity extends Activity {
     private DrawerLayout mDrawerLayout;
@@ -259,8 +260,6 @@ public class MainActivity extends Activity {
             fragmentManager.beginTransaction().replace(R.id.content_frame, graph).commit();
         } else if (position == 5) {
             fragmentManager.beginTransaction().replace(R.id.content_frame, blueToothPair).commit();
-        } else if (position == 6) {
-            startActivity(new Intent(getBaseContext(), DeviceListActivity.class));
         } else {
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
         }
@@ -343,12 +342,13 @@ public class MainActivity extends Activity {
         readBuffer = new byte[1024];
         workerThread = new Thread(new Runnable()
         {
-            public void run()
-            {
+            public void run() {
+                Looper.prepare();
                 final MySQLiteHelper db = new MySQLiteHelper(getApplicationContext());
                 Date utilDate = Calendar.getInstance().getTime();
                 LinkedList<Integer> average = new LinkedList<>();
                 boolean opened = false;
+                int startForce = 0;
                 while(average.size() < 20) {
                     try {
                         int bytesAvailable = mmInputStream.available();
@@ -379,9 +379,22 @@ public class MainActivity extends Activity {
                     }
                 }
 
-
                 if (isOpen(average)) {
                     opened = true;
+                    startForce = (int) Statistics.getMean(average);
+                    new Thread() {
+                        public void run() {
+                            try {
+                                runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        initiatePopupWindow();
+                                    }
+                                });
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }.start();
                 }
 
                 while(!Thread.currentThread().isInterrupted() && !stopWorker)
@@ -408,34 +421,63 @@ public class MainActivity extends Activity {
                             }
                             if (!data.isEmpty()) {
                                 if (average.size() >= 20) {
-                                    average.add(Integer.parseInt(data.substring(0, data.length() - 1)));
+                                    average.add(Math.abs(Integer.parseInt(data.substring(0, data.length() - 1))));
                                     average.removeFirst();
 
                                     if (isOpen(average) && !opened) {
                                         utilDate = Calendar.getInstance().getTime();
                                         opened = true;
+                                        new Thread() {
+                                            public void run() {
+                                                try {
+                                                    runOnUiThread(new Runnable() {
+                                                        public void run() {
+                                                            initiatePopupWindow();
+                                                        }
+                                                    });
+                                                } catch (Exception e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        }.start();
+                                        startForce =(int) Statistics.getMean(average);
                                         Log.d("BT", "BOOK IS OPENED");
                                     } else if (!isOpen(average) && opened) {
                                         final long startTime = utilDate.getTime();
                                         final long endTime = Calendar.getInstance().getTime().getTime();
+                                        final int endForce = (int) Statistics.getMean(average);
+                                        final int sForce = startForce;
                                         handler.post(new Runnable() {
                                             public void run() {
                                                 db.addReadPeriod(new ReadPeriod(
                                                         startTime,
                                                         endTime,
-                                                        12,
-                                                        28,
-                                                        26,
+                                                        1 - endForce/740,
+                                                        sForce,
+                                                        endForce,
                                                         1
                                                 ));
                                             }
                                         });
                                         Log.d("BT", "Start time: " + startTime + " End time: " + endTime);
                                         Log.d("BT", "BOOK IS CLOSED");
+                                        new Thread() {
+                                            public void run() {
+                                                try {
+                                                    runOnUiThread(new Runnable() {
+                                                        public void run() {
+                                                            dismissPopup();
+                                                        }
+                                                    });
+                                                } catch (Exception e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        }.start();
                                         opened = false;
                                     }
                                 } else {
-                                    average.add(Integer.parseInt(data.substring(0, data.length() - 1)));
+                                    average.add(Math.abs(Integer.parseInt(data.substring(0, data.length() - 1))));
                                 }
                             }
                         }
@@ -446,6 +488,7 @@ public class MainActivity extends Activity {
                         stopWorker = true;
                     }
                 }
+                Looper.loop();
             }
         });
 
@@ -453,7 +496,7 @@ public class MainActivity extends Activity {
     }
 
     public boolean isOpen(List<Integer> list) {
-        return Statistics.median(list) < 20;
+        return Statistics.median(list) < 25;
     }
 
 
@@ -472,7 +515,7 @@ public class MainActivity extends Activity {
             View layout = getLayoutInflater().inflate(R.layout.popup_layout,
                     (ViewGroup) findViewById(R.id.popup_element));
             // create a 300px width and 470px height PopupWindow
-            pw = new PopupWindow(layout, LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, true);
+            pw = new PopupWindow(layout, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT, true);
             // display the popup in the center
             pw.showAtLocation(layout, Gravity.CENTER, 0, 0);
 
@@ -489,6 +532,18 @@ public class MainActivity extends Activity {
             pw.dismiss();
         }
     };
+
+    protected void dismissPopup() {
+        try {
+            if ((this.pw != null) && this.pw.isShowing()) {
+                this.pw.dismiss();
+            }
+        } catch (final IllegalArgumentException e) {
+            // Handle or log or ignore
+        } catch (final Exception e) {
+            // Handle or log or ignore
+        }
+    }
 
 }
 
