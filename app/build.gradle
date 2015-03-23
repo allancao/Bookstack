@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.android.navigationdrawerexample"
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 17
     }
 
