@@ -15,7 +15,7 @@
   -->
 
 <resources>
-    <string name="app_name">Reading Tracker</string>
+    <string name="app_name">Bookstack</string>
     <string-array name="nav_drawer_items">
         <item>Reading Progress</item>
         <item>Recommendations</item>
