@@ -38,7 +38,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -46,8 +45,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import android.widget.Button;
+import android.widget.PopupWindow;
 
 import bookstack.Tools.Statistics;
 
@@ -228,13 +227,22 @@ public class MainActivity extends Activity {
         // update the main content by replacing fragments
         Fragment fragment = new PlanetFragment();
         Fragment graph = new Graph();
+        Fragment reco = new RecommendationFragment();
         Fragment blueToothPair = new BluetoothFragment();
+        Fragment week = new WeekFragment();
+        Fragment progress = new ProgressFragment();
         Bundle args = new Bundle();
         args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
         fragment.setArguments(args);
 
         FragmentManager fragmentManager = getFragmentManager();
         if (position == 0) {
+            fragmentManager.beginTransaction().replace(R.id.content_frame, progress).commit();
+        } else if (position == 1) {
+            fragmentManager.beginTransaction().replace(R.id.content_frame, reco).commit();
+        } else if (position == 2) {
+            fragmentManager.beginTransaction().replace(R.id.content_frame, week).commit();
+        } else if (position == 3) {
             fragmentManager.beginTransaction().replace(R.id.content_frame, graph).commit();
         } else if (position == 5) {
             fragmentManager.beginTransaction().replace(R.id.content_frame, blueToothPair).commit();
@@ -434,5 +442,6 @@ public class MainActivity extends Activity {
     public boolean isOpen(List<Integer> list) {
         return Statistics.median(list) < 20;
     }
+
 }
 

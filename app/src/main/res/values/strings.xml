@@ -17,10 +17,10 @@
 <resources>
     <string name="app_name">Reading Tracker</string>
     <string-array name="nav_drawer_items">
-        <item>Weekly Tracker</item>
-        <item>Reading notifications</item>
+        <item>Reading Progress</item>
         <item>Recommendations</item>
-        <item>Write a review</item>
+        <item>Weekly Tracker</item>
+        <item>Graph</item>
         <item>Share</item>
         <item>Pair Device</item>
         <item>Data Transfer Test</item>
