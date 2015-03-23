@@ -278,6 +278,8 @@ public class MainActivity extends Activity {
 
     // The method that displays the popup.
     // http://mobilemancer.com/2011/01/08/popup-window-in-android/
+    // start popup: initiatePopupWindow()
+    // hide popup: pw.dismiss();
     private PopupWindow pw;
     private void initiatePopupWindow() {
         try {
@@ -289,11 +291,11 @@ public class MainActivity extends Activity {
             View layout = getLayoutInflater().inflate(R.layout.popup_layout,
                     (ViewGroup) findViewById(R.id.popup_element));
             // create a 300px width and 470px height PopupWindow
-            pw = new PopupWindow(layout, 300, 470, true);
+            pw = new PopupWindow(layout, LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, true);
             // display the popup in the center
             pw.showAtLocation(layout, Gravity.CENTER, 0, 0);
 
-            Button cancelButton = (Button) layout.findViewById(R.id.end_data_send_button);
+            Button cancelButton = (Button) layout.findViewById(R.id.hide_message_button);
             cancelButton.setOnClickListener(cancel_button_click_listener);
 
         } catch (Exception e) {
