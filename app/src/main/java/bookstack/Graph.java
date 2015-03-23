@@ -22,6 +22,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class Graph extends Fragment {
 
@@ -55,11 +56,11 @@ public class Graph extends Fragment {
         // these values are weird. just graphs reading periods...
         for (int i=0; i<rps.size(); i++) {
             daysList.add((Number)(new Integer(i)));
-            int diff = ( rps.get(i).getEnd() - rps.get(i).getStart() );
-            Log.d("diff", Integer.toString(diff));
-            int minutes = diff / (60);
-            Log.d("minutes", Integer.toString(minutes));
-            valuesList.add((Number)(new Integer(minutes)));
+            long diff = ( rps.get(i).getEnd() - rps.get(i).getStart() );
+            Log.d("diff", String.valueOf(diff));
+            long minutes = diff / (60);
+            Log.d("minutes", String.valueOf(minutes));
+            valuesList.add((Number)(new Integer((int)minutes)));
         }
 
         Number[] days = new Number[daysList.size()];
