@@ -3,6 +3,7 @@ package bookstack;
 import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +15,14 @@ import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
 import com.androidplot.xy.XYStepMode;
-
+import android.content.Context;
 import bookstack.R;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 public class Graph extends Fragment {
 
@@ -35,8 +39,44 @@ public class Graph extends Fragment {
         View rootView = inflater.inflate(R.layout.graph, container, false);
         plot = (XYPlot) rootView.findViewById(R.id.mySimpleXYPlot);
 
-        Number[] days =   { 1  , 2   , 3   , 4   , 5   , 6   , 7 };
-        Number[] values = { 10, 30, 40, 60, 100, 95, 70};
+        // DATA
+
+//        Number[] days =   {};
+//        Number[] values = {};
+
+        // this code sucks.
+
+        List<Number> daysList =   new ArrayList<Number>();
+        List<Number> valuesList = new ArrayList<Number>();
+
+        MySQLiteHelper db = new MySQLiteHelper(getActivity());
+
+        List<ReadPeriod> rps = db.getAllReadPeriod();
+
+        // these values are weird. just graphs reading periods...
+        for (int i=0; i<rps.size(); i++) {
+            daysList.add((Number)(new Integer(i)));
+            long diff = ( rps.get(i).getEnd() - rps.get(i).getStart() );
+            Log.d("diff", String.valueOf(diff));
+            long minutes = diff / (60);
+            Log.d("minutes", String.valueOf(minutes));
+            valuesList.add((Number)(new Integer((int)minutes)));
+        }
+
+        Number[] days = new Number[daysList.size()];
+        days = daysList.toArray(days);
+
+
+        Number[] values = new Number[valuesList.size()];
+        values = valuesList.toArray(values);
+
+        Number[] dumbdays =   { 1  , 2   , 3   , 4   , 5   , 6   , 7 };
+        Number[] dumbvalues = { 10, 30, 40, 60, 100, 95, 70};
+
+        Log.d("dumbdays", Arrays.toString(dumbdays));
+        Log.d("dumbvalues", Arrays.toString(dumbvalues));
+        Log.d("days", Arrays.toString(days));
+        Log.d("values", Arrays.toString(values));
 
         XYSeries mySeries = new SimpleXYSeries(
                 Arrays.asList(days),
