@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Bookstack.iml" filepath="$PROJECT_DIR$/Bookstack.iml" />
       <module fileurl="file://$PROJECT_DIR$/Bookstackv2.iml" filepath="$PROJECT_DIR$/Bookstackv2.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/libs/usb-serial-for-android-master/usbSerialForAndroid/usbSerialForAndroid.iml" filepath="$PROJECT_DIR$/libs/usb-serial-for-android-master/usbSerialForAndroid/usbSerialForAndroid.iml" />
     </modules>
   </component>
 </project>

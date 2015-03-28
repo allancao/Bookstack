@@ -1,4 +1,4 @@
-package bookstack;
+package bookstack.Tools;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -28,8 +28,8 @@ public class SignedRequestsHelper {
     private String endpoint = "webservices.amazon.com"; // must be lowercase
 
     // change this so reads from properties file
-    private String awsAccessKeyId = "AKIAI7OIY3GBDKFJCPRQ";
-    private String awsSecretKey = "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";
+    private String awsAccessKeyId = "AKIAIAF2CP25FCG476HA";
+    private String awsSecretKey = "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";
 
     private SecretKeySpec secretKeySpec = null;
     private Mac mac = null;

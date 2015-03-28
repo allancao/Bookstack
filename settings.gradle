@@ -1,2 +1,1 @@
 include ':app'
-include ':libs:usb-serial-for-android-master:usbSerialForAndroid'

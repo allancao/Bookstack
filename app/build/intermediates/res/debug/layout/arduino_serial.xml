@@ -47,4 +47,4 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/separator" />
 
-</LinearLayout><!-- From: file:/C:/Users/Cain/AndroidStudioProjects/Bookstackv2/app/src/main/res/layout/arduino_serial.xml -->
+</LinearLayout><!-- From: file:/C:/Users/Allan/AndroidStudioProjects/Bookstack/app/src/main/res/layout/arduino_serial.xml -->

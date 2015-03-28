@@ -45,17 +45,24 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import org.w3c.dom.NodeList;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import bookstack.Tools.Parser;
+import bookstack.Tools.SignedRequestsHelper;
 import bookstack.Tools.Statistics;
+import bookstack.Tools.UrlParameterHandler;
 
 public class MainActivity extends Activity {
     private DrawerLayout mDrawerLayout;
@@ -543,6 +550,38 @@ public class MainActivity extends Activity {
         } catch (final Exception e) {
             // Handle or log or ignore
         }
+    }
+
+    private String itemLookup(String isbn) throws Exception {
+        SignedRequestsHelper helper = new SignedRequestsHelper();
+        Parser parser = new Parser();
+
+        Map<String, String> map = new HashMap<>();
+        String url = helper.sign(map);
+
+        NodeList nodeList = parser.getResponseNodeList(url);
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            System.out.println(nodeList.item(i));
+        }
+
+        return null;
+    }
+
+    public static void main(String[] args) throws Exception {
+
+        SignedRequestsHelper helper = new SignedRequestsHelper();
+        Parser parser = new Parser();
+
+        Map<String, String> map = UrlParameterHandler.getInstance().buildMapForItemSearch("B005B1CECU");
+        String url = helper.sign(map);
+        System.out.println(url);
+
+        NodeList nodeList = parser.getResponseNodeList(url);
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            System.out.println(nodeList.item(i).getNodeValue());
+        }
+
+
     }
 
 }

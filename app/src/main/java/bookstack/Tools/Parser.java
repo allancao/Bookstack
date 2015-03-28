@@ -1,6 +1,10 @@
-package bookstack;
+package bookstack.Tools;
 
+import android.sax.EndElementListener;
+import android.sax.EndTextElementListener;
+import android.sax.RootElement;
 import android.util.Log;
+import android.util.Xml;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -11,6 +15,7 @@ import org.xml.sax.SAXException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.URL;
@@ -39,18 +44,18 @@ public class Parser {
     //Items,Request,IsValid,Item,ASIN,DetailPageURL,MediumImage,URL,ItemAttributes,Title
 
 
-    public NodeList getResponceNodeList(String service_url) {
-        String searchResponce = this.getUrlContents(service_url);
-        Log.i("url",""+service_url);
-        Log.i("responce",""+searchResponce);
+    public NodeList getResponseNodeList(String service_url) {
+        String searchResponse = this.getUrlContents(service_url);
+//        Log.i("url",""+service_url);
+//        Log.i("response",""+searchResponse);
         Document doc;
         NodeList items = null;
-        if (searchResponce != null) {
+        if (searchResponse != null) {
             try {
-                doc = this.getDomElement(searchResponce);
+                doc = this.getDomElement(searchResponse);
                 items = doc.getElementsByTagName(KEY_ROOT);
                 Element element=(Element)items.item(0);
-                if(isResponceValid(element)){
+                if(isResponseValid(element)){
                     items=doc.getElementsByTagName(KEY_ITEM);
                 }
             } catch (Exception e) {
@@ -72,7 +77,7 @@ public class Parser {
 //        return object;
 //    }
 
-    public boolean isResponceValid(Element element){
+    public boolean isResponseValid(Element element){
         NodeList nList=element.getElementsByTagName(KEY_REQUEST_ROOT);
         Element e=(Element)nList.item(0);
         if(getValue(e, KEY_REQUEST_CONTAINER).equals(VALUE_VALID_RESPONCE)){
@@ -111,6 +116,7 @@ public class Parser {
             InputSource is = new InputSource();
             is.setCharacterStream(new StringReader(xml));
             doc = (Document) db.parse(is);
+            String message = doc.getDocumentElement().getTextContent();
 
         } catch (ParserConfigurationException e) {
             Log.e("Error: ", e.getMessage());
@@ -145,5 +151,51 @@ public class Parser {
     public String getValue(Element item, String str) {
         NodeList n = item.getElementsByTagName(str);
         return this.getElementValue(n.item(0));
+    }
+
+    public static List<AmazonItem> parse(final String url)
+    {
+        final AmazonItem currentItem = new AmazonItem();
+        final List<AmazonItem> returnItems = new ArrayList<AmazonItem>();
+
+        final RootElement root = new RootElement("ItemSearchResponse");
+        final Element items = root.getChild("Items");
+        final Element item = items.getChild("Item");
+
+        item.getChild("DetailPageURL").setEndTextElementListener(new EndTextElementListener()
+        {
+            public void end(final String body) {
+                currentItem.setLink(body);
+            }
+        });
+
+        final Element attributes = item.getChild("ItemAttributes");
+
+        attributes.getChild("Title").setEndTextElementListener(new EndTextElementListener()
+        {
+            public void end(final String body) {
+                currentItem.setTitle(body);
+            }
+        });
+
+        item.setEndElementListener(new EndElementListener()
+        {
+            public void end() {
+                returnItems.add(currentMessage.copy());
+            }
+        });
+
+        try
+        {
+            final InputStream stream = new URL(url).openConnection().getInputStream();
+
+            Xml.parse(stream, Xml.Encoding.UTF_8, root.getContentHandler());
+            stream.close();
+        }
+        catch (Exception e)
+        {
+        }
+
+        return returnItems;
     }
 }

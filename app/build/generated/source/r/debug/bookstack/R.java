@@ -13,6 +13,10 @@ public final class R {
     }
     public static final class attr {
     }
+    public static final class color {
+        public static final int google_green=0x7f090000;
+        public static final int white_bg=0x7f090001;
+    }
     public static final class dimen {
         public static final int activity_horizontal_margin=0x7f060000;
         public static final int activity_vertical_margin=0x7f060001;
@@ -27,37 +31,40 @@ public final class R {
     }
     public static final class drawable {
         public static final int action_search=0x7f020000;
-        public static final int drawer_shadow=0x7f020001;
-        public static final int earth=0x7f020002;
-        public static final int ic_drawer=0x7f020003;
-        public static final int ic_launcher=0x7f020004;
-        public static final int jupiter=0x7f020005;
-        public static final int mars=0x7f020006;
-        public static final int mercury=0x7f020007;
-        public static final int neptune=0x7f020008;
-        public static final int saturn=0x7f020009;
-        public static final int uranus=0x7f02000a;
-        public static final int venus=0x7f02000b;
+        public static final int book_heart_icon=0x7f020001;
+        public static final int book_heart_small=0x7f020002;
+        public static final int drawer_shadow=0x7f020003;
+        public static final int earth=0x7f020004;
+        public static final int ic_drawer=0x7f020005;
+        public static final int ic_launcher=0x7f020006;
+        public static final int jupiter=0x7f020007;
+        public static final int mars=0x7f020008;
+        public static final int mercury=0x7f020009;
+        public static final int neptune=0x7f02000a;
+        public static final int saturn=0x7f02000b;
+        public static final int uranus=0x7f02000c;
+        public static final int venus=0x7f02000d;
     }
     public static final class id {
-        public static final int action_websearch=0x7f090011;
-        public static final int close=0x7f09000c;
-        public static final int consoleText=0x7f090010;
-        public static final int content_frame=0x7f090001;
-        public static final int demoScroller=0x7f09000f;
-        public static final int demoTitle=0x7f090003;
-        public static final int deviceList=0x7f090007;
-        public static final int drawer_layout=0x7f090000;
-        public static final int entry=0x7f090009;
-        public static final int image=0x7f09000d;
-        public static final int label=0x7f090008;
-        public static final int left_drawer=0x7f090002;
-        public static final int mySimpleXYPlot=0x7f09000e;
-        public static final int open=0x7f09000a;
-        public static final int progressBar=0x7f090005;
-        public static final int progressBarTitle=0x7f090004;
-        public static final int send=0x7f09000b;
-        public static final int separator=0x7f090006;
+        public static final int action_websearch=0x7f0b0012;
+        public static final int close=0x7f0b000a;
+        public static final int consoleText=0x7f0b0011;
+        public static final int content_frame=0x7f0b0001;
+        public static final int demoScroller=0x7f0b0010;
+        public static final int demoTitle=0x7f0b0003;
+        public static final int deviceList=0x7f0b0007;
+        public static final int drawer_layout=0x7f0b0000;
+        public static final int hide_message_button=0x7f0b000f;
+        public static final int image=0x7f0b000b;
+        public static final int label=0x7f0b0008;
+        public static final int left_drawer=0x7f0b0002;
+        public static final int mySimpleXYPlot=0x7f0b000c;
+        public static final int open=0x7f0b0009;
+        public static final int popup_element=0x7f0b000d;
+        public static final int progressBar=0x7f0b0005;
+        public static final int progressBarTitle=0x7f0b0004;
+        public static final int reading_text=0x7f0b000e;
+        public static final int separator=0x7f0b0006;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -68,10 +75,11 @@ public final class R {
         public static final int fragment_planet=0x7f030005;
         public static final int graph=0x7f030006;
         public static final int main=0x7f030007;
-        public static final int serial_console=0x7f030008;
+        public static final int popup_layout=0x7f030008;
+        public static final int serial_console=0x7f030009;
     }
     public static final class menu {
-        public static final int main=0x7f080000;
+        public static final int main=0x7f0a0000;
     }
     public static final class string {
         public static final int List=0x7f070000;
@@ -88,6 +96,11 @@ public final class R {
         public static final int off=0x7f07000b;
         public static final int on=0x7f07000c;
         public static final int refreshing=0x7f07000d;
+        public static final int toast_connection_lost=0x7f07000e;
+        public static final int toast_unable_to_connect=0x7f07000f;
+    }
+    public static final class style {
+        public static final int AppTheme=0x7f080000;
     }
     public static final class xml {
         public static final int device_filter=0x7f040000;

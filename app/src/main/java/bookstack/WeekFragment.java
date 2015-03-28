@@ -6,11 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import bookstack.R;
-
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+
+import bookstack.Tools.SignedRequestsHelper;
 
 public class WeekFragment extends Fragment {
     public static final String ARG_PLANET_NUMBER = "planet_number";
@@ -29,8 +29,8 @@ public class WeekFragment extends Fragment {
 
     public String sign() throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException {
         SignedRequestsHelper signedRequestsHelper = new SignedRequestsHelper();
-        String signed = signedRequestsHelper.sign(UrlParameterHandler.getInstance().buildMapForItemSearch());
+//        String signed = signedRequestsHelper.sign(UrlParameterHandler.getInstance().buildMapForItemSearch());
 
-        return signed;
+        return "";
     }
 }

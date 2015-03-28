@@ -23,4 +23,4 @@
         androidPlot.graphWidget.domainOriginLabelPaint.textSize="@dimen/domain_tick_label_font_size"
         androidPlot.graphWidget.gridLinePaint.color="#FFFFFF"/>
 
-</RelativeLayout><!-- From: file:/C:/Users/Cain/AndroidStudioProjects/Bookstackv2/app/src/main/res/layout/graph.xml -->
+</RelativeLayout><!-- From: file:/C:/Users/Allan/AndroidStudioProjects/Bookstack/app/src/main/res/layout/graph.xml -->

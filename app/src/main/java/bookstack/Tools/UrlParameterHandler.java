@@ -1,4 +1,4 @@
-package bookstack;
+package bookstack.Tools;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,18 +17,15 @@ public class UrlParameterHandler {
         return paramHandler;
     }
 
-    public  Map<String,String> buildMapForItemSearch(){
+    public  Map<String,String> buildMapForItemSearch(String asin){
         Map<String, String> myparams = new HashMap<String, String>();
         myparams.put("Service", "AWSECommerceService");
-        myparams.put("Operation", "ItemSearch");
         myparams.put("Version", "2009-10-01");
         myparams.put("ContentType", "text/xml");
-        myparams.put("SearchIndex", "MobileApps");//for searching mobile apps
-        myparams.put("Keywords", "games");
-        myparams.put("AssociateTag", "apps");
-        myparams.put("MaximumPrice","1000");
-        myparams.put("Sort","price");
+        myparams.put("MaximumPrice","50");
         myparams.put("ResponseGroup", "Images,Small");
+        myparams.put("Operation", "SimilarityLookup");
+        myparams.put("ItemId", asin);
         return myparams;
     }
 

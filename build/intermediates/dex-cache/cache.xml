@@ -2,46 +2,46 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\Cain\AndroidStudioProjects\Bookstackv2\app\build\intermediates\exploded-aar\com.hoho.android\usbSerialForAndroid\0.2.0-SNAPSHOT\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="583488f06a626e153cc02dad8caec82efff100a3">
-        <dex dex="C:\Users\Cain\AndroidStudioProjects\Bookstackv2\app\build\intermediates\pre-dexed\debug\classes-1f499e1acb57437ae2fcddbdb09bb5708276dc8b.jar" />
-    </item>
-    <item
-        jar="C:\Users\Cain\AndroidStudioProjects\Bookstackv2\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
-        <dex dex="C:\Users\Cain\AndroidStudioProjects\Bookstackv2\app\build\intermediates\pre-dexed\debug\classes-9bd3f1ae114d4860593ff5efb1b2dbe5de5c9634.jar" />
-    </item>
-    <item
-        jar="C:\Users\Cain\AndroidStudioProjects\Bookstackv2\app\libs\androidplot-core-0.6.1.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="3db0daea52375b26bfa61c59b8df93950bdefbbc">
-        <dex dex="C:\Users\Cain\AndroidStudioProjects\Bookstackv2\app\build\intermediates\pre-dexed\debug\androidplot-core-0.6.1-d56fa7bb4a22d0e7995587934232ed30949fa8e1.jar" />
-    </item>
-    <item
-        jar="C:\Users\Cain\AndroidStudioProjects\Bookstackv2\app\libs\commons-codec-1.10\commons-codec-1.10.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="4b95f4897fa13f2cd904aee711aeafc0c5295cd8">
-        <dex dex="C:\Users\Cain\AndroidStudioProjects\Bookstackv2\app\build\intermediates\pre-dexed\debug\commons-codec-1.10-298fe7118188cd0b275f257d15260fdba92ad411.jar" />
-    </item>
-    <item
-        jar="C:\Users\Cain\AndroidStudioProjects\Bookstackv2\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
+        jar="C:\Users\Allan\AndroidStudioProjects\Bookstack\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="C:\Users\Cain\AndroidStudioProjects\Bookstackv2\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-2c4d11052dba067872848c973d8bbf672d8d8b44.jar" />
+        <dex dex="C:\Users\Allan\AndroidStudioProjects\Bookstack\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-8032096f0c75b9bc26f2271e5a718958136e3141.jar" />
     </item>
     <item
-        jar="C:\Users\Cain\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
+        jar="C:\Users\Allan\AndroidStudioProjects\Bookstack\app\build\intermediates\exploded-aar\com.hoho.android\usbSerialForAndroid\0.2.0-SNAPSHOT\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="90f031608fb7f6115531bc96ac341baa71b70060">
+        <dex dex="C:\Users\Allan\AndroidStudioProjects\Bookstack\app\build\intermediates\pre-dexed\debug\classes-134b6c765956bfc53cce91dc42ca338705d0f9ee.jar" />
+    </item>
+    <item
+        jar="C:\Users\Allan\AndroidStudioProjects\Bookstack\app\libs\commons-codec-1.10\commons-codec-1.10.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4b95f4897fa13f2cd904aee711aeafc0c5295cd8">
+        <dex dex="C:\Users\Allan\AndroidStudioProjects\Bookstack\app\build\intermediates\pre-dexed\debug\commons-codec-1.10-e5f0be9c9f1a0955dc7dda30a43fb28069f8c446.jar" />
+    </item>
+    <item
+        jar="C:\Users\Allan\AndroidStudioProjects\Bookstack\app\libs\androidplot-core-0.6.1.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="3db0daea52375b26bfa61c59b8df93950bdefbbc">
+        <dex dex="C:\Users\Allan\AndroidStudioProjects\Bookstack\app\build\intermediates\pre-dexed\debug\androidplot-core-0.6.1-a36ddda8b6f4b39e36aa07cfda9a6e5d60e63a78.jar" />
+    </item>
+    <item
+        jar="C:\Users\Allan\AndroidStudioProjects\Bookstack\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="C:\Users\Allan\AndroidStudioProjects\Bookstack\app\build\intermediates\pre-dexed\debug\classes-a570ff9d3a0315cdfed38eeb20d2a3a2b557d8b1.jar" />
+    </item>
+    <item
+        jar="D:\Android\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
-        <dex dex="C:\Users\Cain\AndroidStudioProjects\Bookstackv2\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-c36e7c37026e86aec56bb3463680532360508054.jar" />
+        <dex dex="C:\Users\Allan\AndroidStudioProjects\Bookstack\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-dc8227eddef5ef217779ec1de2c8dcaaaa31e91a.jar" />
     </item>
 
 </items>
