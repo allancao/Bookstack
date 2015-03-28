@@ -595,17 +595,9 @@ public class MainActivity extends Activity {
         SignedRequestsHelper helper = new SignedRequestsHelper();
         Parser parser = new Parser();
 
-        Map<String, String> map = UrlParameterHandler.getInstance().buildMapForItemSearch("B005B1CECU");
+        Map<String, String> map = UrlParameterHandler.getInstance().buildMapForItemLookup("0201633612");
         String url = helper.sign(map);
         System.out.println(url);
-
-        NodeList nodeList = parser.getResponseNodeList(url);
-        for (int i = 0; i < nodeList.getLength(); i++) {
-            System.out.println(nodeList.item(i).getNodeValue());
-        }
-
-
     }
-
 }
 

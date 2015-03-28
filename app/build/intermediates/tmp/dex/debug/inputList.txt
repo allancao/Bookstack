@@ -1,7 +1,0 @@
-C:\Users\Allan\AndroidStudioProjects\Bookstack\app\build\intermediates\classes\debug
-C:\Users\Allan\AndroidStudioProjects\Bookstack\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-dc8227eddef5ef217779ec1de2c8dcaaaa31e91a.jar
-C:\Users\Allan\AndroidStudioProjects\Bookstack\app\build\intermediates\pre-dexed\debug\classes-134b6c765956bfc53cce91dc42ca338705d0f9ee.jar
-C:\Users\Allan\AndroidStudioProjects\Bookstack\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-8032096f0c75b9bc26f2271e5a718958136e3141.jar
-C:\Users\Allan\AndroidStudioProjects\Bookstack\app\build\intermediates\pre-dexed\debug\androidplot-core-0.6.1-a36ddda8b6f4b39e36aa07cfda9a6e5d60e63a78.jar
-C:\Users\Allan\AndroidStudioProjects\Bookstack\app\build\intermediates\pre-dexed\debug\commons-codec-1.10-e5f0be9c9f1a0955dc7dda30a43fb28069f8c446.jar
-C:\Users\Allan\AndroidStudioProjects\Bookstack\app\build\intermediates\pre-dexed\debug\classes-a570ff9d3a0315cdfed38eeb20d2a3a2b557d8b1.jar

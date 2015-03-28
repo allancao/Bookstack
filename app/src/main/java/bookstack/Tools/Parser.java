@@ -1,10 +1,6 @@
 package bookstack.Tools;
 
-import android.sax.EndElementListener;
-import android.sax.EndTextElementListener;
-import android.sax.RootElement;
 import android.util.Log;
-import android.util.Xml;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -15,7 +11,6 @@ import org.xml.sax.SAXException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.URL;
@@ -151,51 +146,5 @@ public class Parser {
     public String getValue(Element item, String str) {
         NodeList n = item.getElementsByTagName(str);
         return this.getElementValue(n.item(0));
-    }
-
-    public static List<AmazonItem> parse(final String url)
-    {
-        final AmazonItem currentItem = new AmazonItem();
-        final List<AmazonItem> returnItems = new ArrayList<AmazonItem>();
-
-        final RootElement root = new RootElement("ItemSearchResponse");
-        final Element items = root.getChild("Items");
-        final Element item = items.getChild("Item");
-
-        item.getChild("DetailPageURL").setEndTextElementListener(new EndTextElementListener()
-        {
-            public void end(final String body) {
-                currentItem.setLink(body);
-            }
-        });
-
-        final Element attributes = item.getChild("ItemAttributes");
-
-        attributes.getChild("Title").setEndTextElementListener(new EndTextElementListener()
-        {
-            public void end(final String body) {
-                currentItem.setTitle(body);
-            }
-        });
-
-        item.setEndElementListener(new EndElementListener()
-        {
-            public void end() {
-                returnItems.add(currentMessage.copy());
-            }
-        });
-
-        try
-        {
-            final InputStream stream = new URL(url).openConnection().getInputStream();
-
-            Xml.parse(stream, Xml.Encoding.UTF_8, root.getContentHandler());
-            stream.close();
-        }
-        catch (Exception e)
-        {
-        }
-
-        return returnItems;
     }
 }
