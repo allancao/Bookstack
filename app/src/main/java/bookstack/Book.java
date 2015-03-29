@@ -14,10 +14,11 @@ public class Book {
 
     public Book(){}
 
-    public Book(String title, String author) {
+    public Book(String title, String author, String smallImage) {
         super();
         this.title = title;
         this.author = author;
+        this.smallImage = smallImage;
         // total force
     }
 

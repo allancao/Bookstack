@@ -136,7 +136,8 @@ public class MainActivity extends Activity {
         // pre-populate db
         if (db.getAllReadPeriod().size() == 0) {
             // add Books
-            db.addBook(new Book("Design Patterns", "Allan Cao"));
+            db.addBook(new Book("Design Patterns", "Allan Cao", "book_heart_icon"));
+            db.addBook(new Book("Cat in a Hat", "Dr Seuss", "book_heart_icon"));
 
             // add read period
             db.addReadPeriod(new ReadPeriod(
