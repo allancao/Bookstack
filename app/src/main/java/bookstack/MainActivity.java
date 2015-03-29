@@ -209,6 +209,7 @@ public class MainActivity extends Activity {
 
 
         // activate bluetooth
+// commented out by davin
         try {
             findBT();
             openBT();
@@ -274,7 +275,7 @@ public class MainActivity extends Activity {
         Fragment reco = new RecommendationFragment();
         Fragment blueToothPair = new BluetoothFragment();
         Fragment week = new WeekFragment();
-        Fragment progress = new ProgressFragment();
+        Fragment progress = new ProgressFragment(getApplicationContext());
         Bundle args = new Bundle();
         args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
         fragment.setArguments(args);
