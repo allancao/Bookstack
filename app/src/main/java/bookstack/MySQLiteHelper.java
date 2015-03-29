@@ -16,7 +16,7 @@ import java.util.List;
 public class MySQLiteHelper extends SQLiteOpenHelper {
 
     // Database Version
-    private static final int DATABASE_VERSION = 14;
+    private static final int DATABASE_VERSION = 19;
 
     // Database Name
     private static final String DATABASE_NAME = "BookDB";
@@ -31,7 +31,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         String CREATE_BOOK_TABLE = "CREATE TABLE books ( " +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "title TEXT, "+
-                "author TEXT )";
+                "author TEXT, "+
+                "smallImage TEXT )";
 
         String CREATE_READPERIOD_TABLE = "CREATE TABLE ReadPeriod ( " +
                 "rp_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -71,7 +72,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     private static final String KEY_TITLE = "title";
     private static final String KEY_AUTHOR = "author";
 
-    private static final String[] COLUMNS = {KEY_ID,KEY_TITLE,KEY_AUTHOR};
+    private static final String[] COLUMNS = {KEY_ID,KEY_TITLE,KEY_AUTHOR, "smallImage"};
 
     public void addBook(Book book){
         Log.d("addBook", book.toString());
@@ -82,6 +83,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_TITLE, book.getTitle()); // get title
         values.put(KEY_AUTHOR, book.getAuthor()); // get author
+        values.put("smallImage", book.getSmallImage());
 
         // 3. insert
         db.insert(TABLE_BOOKS, // table
@@ -117,6 +119,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         book.setId(Integer.parseInt(cursor.getString(0)));
         book.setTitle(cursor.getString(1));
         book.setAuthor(cursor.getString(2));
+        book.setSmallImage(cursor.getString(3));
 
         Log.d("getBook("+id+")", book.toString());
 
@@ -143,6 +146,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 book.setId(Integer.parseInt(cursor.getString(0)));
                 book.setTitle(cursor.getString(1));
                 book.setAuthor(cursor.getString(2));
+                book.setSmallImage(cursor.getString(3));
 
                 // Add book to books
                 books.add(book);

@@ -94,8 +94,8 @@ public class ImageAdapter extends BaseAdapter {
 
             //http://stackoverflow.com/questions/11595665/saving-resources-path-in-sqlite
             Log.d(books.get(position).getSmallImage(), "small image name");
-            int resId = mContext.getResources().getIdentifier("book_heart_icon","drawable",mContext.getPackageName());
-//            int resId = mContext.getResources().getIdentifier(books.get(position).getSmallImage(),"drawable",mContext.getPackageName());
+//            int resId = mContext.getResources().getIdentifier("book_heart_icon","drawable",mContext.getPackageName());
+            int resId = mContext.getResources().getIdentifier(books.get(position).getSmallImage(),"drawable",mContext.getPackageName());
             imageView.setImageResource(resId);
 
         } else {

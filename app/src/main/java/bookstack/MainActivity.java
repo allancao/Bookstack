@@ -137,7 +137,7 @@ public class MainActivity extends Activity {
         if (db.getAllReadPeriod().size() == 0) {
             // add Books
             db.addBook(new Book("Design Patterns", "Allan Cao", "book_heart_icon"));
-            db.addBook(new Book("Cat in a Hat", "Dr Seuss", "book_heart_icon"));
+            db.addBook(new Book("Cat in a Hat", "Dr Seuss", "earth"));
 
             // add read period
             db.addReadPeriod(new ReadPeriod(

@@ -1,5 +1,7 @@
 package bookstack;
 
+import android.util.Log;
+
 /**
  * Created by davintwong on 3/18/15.
  */
@@ -19,6 +21,8 @@ public class Book {
         this.title = title;
         this.author = author;
         this.smallImage = smallImage;
+//        Log.d(smallImage2, "smallImage2");
+//        Log.d(smallImage, "smallImage");
         // total force
     }
 
