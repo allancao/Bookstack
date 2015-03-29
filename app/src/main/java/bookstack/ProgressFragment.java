@@ -28,6 +28,9 @@ public class ProgressFragment extends Fragment {
                              Bundle savedInstanceState) {
         // http://www.appsrox.com/android/tutorials/showcase/8/
 
+        // do not call super. it is for activity.
+//        http://stackoverflow.com/questions/19214620/android-imageadapter-with-gridview-in-fragment
+
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.progress, container, false);
         GridView gridview = (GridView) rootView.findViewById(R.id.progress);
