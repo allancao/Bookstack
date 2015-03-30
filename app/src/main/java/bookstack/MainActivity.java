@@ -221,6 +221,7 @@ public class MainActivity extends Activity {
             Log.e("BT Error", "Could not open bt");
         }
 
+        // recommendations
         try {
             AwsParser parser = new AwsParser();
             List<Book> recommendations = parser.asinSimilarityLookup("0201633612");
@@ -233,33 +234,37 @@ public class MainActivity extends Activity {
             Log.d("AWS", e.getMessage());
             Log.d("AWS", "Couldn't find recos, hardcoding now");
 
-            Book book1 = new Book();
-            book1.setAsin("ASIN1");
-            book1.setIsbn("ISBN1");
-            book1.setAuthor("Steve McConnell");
-            book1.setTitle("Code Complete: A Practical Handbook of Software Construction");
-            book1.setDetailPageUrl("http://www.amazon.com/Code-Complete-Practical-Handbook-Construction/dp/0735619670%3FSubscriptionId%3DAKIAIAF2CP25FCG476HA%26tag%3Dws%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0735619670");
-            book1.setSmallImage("Small Image 1");
+            db.addBook(new Book("Code Complete: A Practical Handbook of Software Construction", "Steve McConnell", "book_heart_icon", 1));
+            db.addBook(new Book("The Mythical Man-Month: Essays on Software Engineering", "Frederick P. Brooks Jr.", "earth", 1));
+            db.addBook(new Book("Tackling Complexity in the Heart of Software", "Eric Evans", "earth", 1));
 
-            Book book2 = new Book();
-            book2.setAsin("ASIN2");
-            book2.setIsbn("ISBN2");
-            book2.setDetailPageUrl("DetailPage2");
-            book2.setSmallImage("Small Image 2");
-            book2.setAuthor("Frederick P. Brooks Jr.");
-            book2.setTitle("The Mythical Man-Month: Essays on Software Engineering");
-
-            Book book3 = new Book();
-            book3.setAsin("ASIN3");
-            book3.setIsbn("ISBN3");
-            book3.setDetailPageUrl("DetailPage3");
-            book3.setSmallImage("Small Image 3");
-            book3.setAuthor("Eric Evans");
-            book3.setTitle("Tackling Complexity in the Heart of Software");
-
-            db.addBook(book1);
-            db.addBook(book2);
-            db.addBook(book3);
+//            Book book1 = new Book();
+//            book1.setAsin("ASIN1");
+//            book1.setIsbn("ISBN1");
+//            book1.setAuthor("Steve McConnell");
+//            book1.setTitle("Code Complete: A Practical Handbook of Software Construction");
+//            book1.setDetailPageUrl("http://www.amazon.com/Code-Complete-Practical-Handbook-Construction/dp/0735619670%3FSubscriptionId%3DAKIAIAF2CP25FCG476HA%26tag%3Dws%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0735619670");
+//            book1.setSmallImage("Small Image 1");
+//
+//            Book book2 = new Book();
+//            book2.setAsin("ASIN2");
+//            book2.setIsbn("ISBN2");
+//            book2.setDetailPageUrl("DetailPage2");
+//            book2.setSmallImage("Small Image 2");
+//            book2.setAuthor("Frederick P. Brooks Jr.");
+//            book2.setTitle("The Mythical Man-Month: Essays on Software Engineering");
+//
+//            Book book3 = new Book();
+//            book3.setAsin("ASIN3");
+//            book3.setIsbn("ISBN3");
+//            book3.setDetailPageUrl("DetailPage3");
+//            book3.setSmallImage("Small Image 3");
+//            book3.setAuthor("Eric Evans");
+//            book3.setTitle("Tackling Complexity in the Heart of Software");
+//
+//            db.addBook(book1);
+//            db.addBook(book2);
+//            db.addBook(book3);
 
         }
     }
