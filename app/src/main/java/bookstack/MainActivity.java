@@ -562,7 +562,7 @@ public class MainActivity extends Activity {
     }
 
     public boolean isOpen(List<Integer> list) {
-        return Statistics.median(list) < 25;
+        return Statistics.median(list) == 9;
     }
 
 
