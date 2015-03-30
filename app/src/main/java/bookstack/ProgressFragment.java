@@ -34,7 +34,7 @@ public class ProgressFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.progress, container, false);
         GridView gridview = (GridView) rootView.findViewById(R.id.progress);
-        gridview.setAdapter(new ImageAdapter(context));
+        gridview.setAdapter(new ImageAdapter(context, 0));
 
         return rootView;
     }

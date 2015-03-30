@@ -322,7 +322,7 @@ public class MainActivity extends Activity {
         // update the main content by replacing fragments
         Fragment fragment = new PlanetFragment();
         Fragment graph = new Graph();
-        Fragment reco = new RecommendationFragment();
+        Fragment reco = new RecommendationFragment(getApplicationContext());
         Fragment blueToothPair = new BluetoothFragment();
         Fragment week = new WeekFragment();
         Fragment progress = new ProgressFragment(getApplicationContext());

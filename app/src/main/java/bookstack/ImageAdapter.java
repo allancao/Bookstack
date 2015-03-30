@@ -23,12 +23,12 @@ public class ImageAdapter extends BaseAdapter {
     private Context mContext;
     public List<Book> books;
 
-    public ImageAdapter(Context c) {
+    public ImageAdapter(Context c, int reco) {
         mContext = c;
 
         // get book from db
         MySQLiteHelper db = new MySQLiteHelper(mContext);
-        List<Book> db_books = db.getAllBooks(0);
+        List<Book> db_books = db.getAllBooks(reco);
         books = db_books;
         Log.d(books.toString(), "imageadapter books");
     }
