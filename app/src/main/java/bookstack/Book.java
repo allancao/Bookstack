@@ -13,14 +13,17 @@ public class Book {
     private String isbn;
     private String title;
     private String author;
+    private int reco;
+    private int percent;
 
     public Book(){}
 
-    public Book(String title, String author, String smallImage) {
+    public Book(String title, String author, String smallImage, int reco) {
         super();
         this.title = title;
         this.author = author;
         this.smallImage = smallImage;
+        this.reco = reco;
 //        Log.d(smallImage2, "smallImage2");
 //        Log.d(smallImage, "smallImage");
         // total force
@@ -94,5 +97,22 @@ public class Book {
                 "title=" + this.title + "," +
                 "author=" + this.author + "]";
         return ret;
+    }
+
+    public int getPercent() {
+        return percent;
+    }
+
+    public int getReco() {
+        return reco;
+    }
+
+
+    public void setPercent(int percent) {
+        this.percent = percent;
+    }
+
+    public void setReco(int reco) {
+        this.reco = reco;
     }
 }

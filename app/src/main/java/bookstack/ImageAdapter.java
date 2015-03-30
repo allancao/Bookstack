@@ -28,7 +28,7 @@ public class ImageAdapter extends BaseAdapter {
 
         // get book from db
         MySQLiteHelper db = new MySQLiteHelper(mContext);
-        List<Book> db_books = db.getAllBooks();
+        List<Book> db_books = db.getAllBooks(0);
         books = db_books;
         Log.d(books.toString(), "imageadapter books");
     }
