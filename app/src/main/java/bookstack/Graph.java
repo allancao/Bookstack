@@ -15,14 +15,11 @@ import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
 import com.androidplot.xy.XYStepMode;
-import android.content.Context;
-import bookstack.R;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class Graph extends Fragment {
 
@@ -58,7 +55,7 @@ public class Graph extends Fragment {
             daysList.add((Number)(new Integer(i)));
             long diff = ( rps.get(i).getEnd() - rps.get(i).getStart() );
             Log.d("diff", String.valueOf(diff));
-            long minutes = diff / (60);
+            long minutes = 1 + (diff / (60 * 1000));
             Log.d("minutes", String.valueOf(minutes));
             valuesList.add((Number)(new Integer((int)minutes)));
         }
@@ -70,11 +67,11 @@ public class Graph extends Fragment {
         Number[] values = new Number[valuesList.size()];
         values = valuesList.toArray(values);
 
-        Number[] dumbdays =   { 1  , 2   , 3   , 4   , 5   , 6   , 7 };
-        Number[] dumbvalues = { 10, 30, 40, 60, 100, 95, 70};
+//        Number[] dumbdays =   { 1  , 2   , 3   , 4   , 5   , 6   , 7 };
+//        Number[] dumbvalues = { 10, 30, 40, 60, 100, 95, 70};
 
-        Log.d("dumbdays", Arrays.toString(dumbdays));
-        Log.d("dumbvalues", Arrays.toString(dumbvalues));
+//        Log.d("dumbdays", Arrays.toString(dumbdays));
+//        Log.d("dumbvalues", Arrays.toString(dumbvalues));
         Log.d("days", Arrays.toString(days));
         Log.d("values", Arrays.toString(values));
 
@@ -106,7 +103,7 @@ public class Graph extends Fragment {
         plot.setDomainStepValue(1);
 
         //Range
-        plot.setRangeBoundaries(0, 120, BoundaryMode.FIXED);
+        plot.setRangeBoundaries(0, 15, BoundaryMode.FIXED);
         plot.setRangeStepValue(5);
         //mySimpleXYPlot.setRangeStep(XYStepMode.SUBDIVIDE, values.length);
         plot.setRangeValueFormat(new DecimalFormat("0"));

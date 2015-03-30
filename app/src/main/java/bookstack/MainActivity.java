@@ -59,7 +59,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import bookstack.Tools.AwsParser;
 import bookstack.Tools.Parser;
 import bookstack.Tools.SignedRequestsHelper;
 import bookstack.Tools.Statistics;
@@ -148,45 +147,26 @@ public class MainActivity extends Activity {
 
             // add read period
             db.addReadPeriod(new ReadPeriod(
-                    1426813200, // Mar 20 2015 1:00
-                    1426816800, // Mar 20 2015 2:00
-                    12,
+                    1427076000000L, // Mar 23 2015 2:00
+                    1427076420000L, // Mar 23 2015 2:07
+                    10,
+                    30,
                     28,
-                    26,
                     1
             ));
 
             db.addReadPeriod(new ReadPeriod(
-                    1426813200, // Mar 20 2015 1:00
-                    1426816800, // Mar 20 2015 2:00
-                    12,
+                    1427072400000L, // Mar 23 2015 1:00
+                    1427072640000L, // Mar 23 2015 1:04
+                    10,
+                    30,
                     28,
-                    26,
                     1
             ));
 
             db.addReadPeriod(new ReadPeriod(
-                    1426899600, // Mar 21 2015 1:00
-                    1426901400, // Mar 21 2015 1:30
-                    5,
-                    300,
-                    297,
-                    1
-            ));
-
-            db.addReadPeriod(new ReadPeriod(
-                    1426986000, // Mar 22 2015 1:00
-                    1426993200, // Mar 22 2015 3:00
-                    5,
-                    300,
-                    297,
-                    1
-            ));
-
-            // READ PERIOD
-            db.addReadPeriod(new ReadPeriod(
-                    1427072400, // Mar 23 2015 1:00
-                    1427076000, // Mar 23 2015 2:00
+                    1427072400000L, // Mar 23 2015 1:00
+                    1427073000000L, // Mar 23 2015 1:10
                     10,
                     30,
                     28,
