@@ -141,10 +141,10 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         String query = "";
 
         if (reco == 0) {
-            query = "SELECT  * FROM " + TABLE_BOOKS;
+            query = "SELECT  * FROM " + TABLE_BOOKS + " WHERE reco = 0";
         }
         else if (reco == 1) {
-            query = "SELECT  * FROM " + TABLE_BOOKS;
+            query = "SELECT  * FROM " + TABLE_BOOKS + " WHERE reco = 1";
         }
 
         // 2. get reference to writable DB
