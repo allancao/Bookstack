@@ -18,12 +18,13 @@ public class Book {
 
     public Book(){}
 
-    public Book(String title, String author, String smallImage, int reco) {
+    public Book(String title, String author, String smallImage, int reco, int percent) {
         super();
         this.title = title;
         this.author = author;
         this.smallImage = smallImage;
         this.reco = reco;
+        this.percent = percent;
 //        Log.d(smallImage2, "smallImage2");
 //        Log.d(smallImage, "smallImage");
         // total force

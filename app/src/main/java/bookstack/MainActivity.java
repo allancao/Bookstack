@@ -137,13 +137,13 @@ public class MainActivity extends Activity {
         // pre-populate db
         if (db.getAllReadPeriod().size() == 0) {
             // add Books
-            db.addBook(new Book("Design Patterns", "Allan Cao", "pattern", 0));
-            db.addBook(new Book("Cat in a Hat", "Dr Seuss", "cat", 0));
+            db.addBook(new Book("Design Patterns", "Allan Cao", "pattern", 0, 25));
+            db.addBook(new Book("Cat in a Hat", "Dr Seuss", "cat", 0, 40));
 
-            db.addBook(new Book("Green Eggs and Ham", "Dr Seuss", "egg", 1));
-            db.addBook(new Book("Code Complete: A Practical Handbook of Software Construction", "Steve McConnell", "codecomplete", 1));
-            db.addBook(new Book("The Mythical Man-Month: Essays on Software Engineering", "Frederick P. Brooks Jr.", "mythical", 1));
-            db.addBook(new Book("Tackling Complexity in the Heart of Software", "Eric Evans", "tackle", 1));
+            db.addBook(new Book("Green Eggs and Ham", "Dr Seuss", "egg", 1, 0));
+            db.addBook(new Book("Code Complete: A Practical Handbook of Software Construction", "Steve McConnell", "codecomplete", 1, 0));
+            db.addBook(new Book("The Mythical Man-Month: Essays on Software Engineering", "Frederick P. Brooks Jr.", "mythical", 1, 0));
+            db.addBook(new Book("Tackling Complexity in the Heart of Software", "Eric Evans", "tackle", 1, 0));
 
 
             // add read period

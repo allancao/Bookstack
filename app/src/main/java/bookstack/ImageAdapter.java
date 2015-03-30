@@ -22,9 +22,11 @@ import java.util.List;
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
     public List<Book> books;
+    public int p_reco;
 
     public ImageAdapter(Context c, int reco) {
         mContext = c;
+        p_reco = reco;
 
         // get book from db
         MySQLiteHelper db = new MySQLiteHelper(mContext);
@@ -83,8 +85,12 @@ public class ImageAdapter extends BaseAdapter {
             // set value into textview
             TextView textView = (TextView) gridView
                     .findViewById(R.id.grid_item_label);
-            textView.setText(books.get(position).getTitle());
-            Log.d(books.get(position).getTitle(), "title book");
+
+            // show % if non-reco
+            if (p_reco == 0) {
+                textView.setText(Integer.toString(books.get(position).getPercent()) + " %");
+            }
+//            Log.d(books.get(position).getTitle(), "title book");
 
             // set image based on selected text
             ImageView imageView = (ImageView) gridView
