@@ -137,9 +137,14 @@ public class MainActivity extends Activity {
         // pre-populate db
         if (db.getAllReadPeriod().size() == 0) {
             // add Books
-            db.addBook(new Book("Design Patterns", "Allan Cao", "book_heart_icon", 0));
-            db.addBook(new Book("Cat in a Hat", "Dr Seuss", "earth", 0));
-            db.addBook(new Book("Design Patterns 2", "barney", "earth", 1));
+            db.addBook(new Book("Design Patterns", "Allan Cao", "pattern", 0));
+            db.addBook(new Book("Cat in a Hat", "Dr Seuss", "cat", 0));
+
+            db.addBook(new Book("Green Eggs and Ham", "Dr Seuss", "egg", 1));
+            db.addBook(new Book("Code Complete: A Practical Handbook of Software Construction", "Steve McConnell", "codecomplete", 1));
+            db.addBook(new Book("The Mythical Man-Month: Essays on Software Engineering", "Frederick P. Brooks Jr.", "mythical", 1));
+            db.addBook(new Book("Tackling Complexity in the Heart of Software", "Eric Evans", "tackle", 1));
+
 
             // add read period
             db.addReadPeriod(new ReadPeriod(
@@ -222,21 +227,21 @@ public class MainActivity extends Activity {
         }
 
         // recommendations
-        try {
-            AwsParser parser = new AwsParser();
-            List<Book> recommendations = parser.asinSimilarityLookup("0201633612");
-            for (Book book : recommendations) {
-                if (book != null && book.getTitle() != null && !book.getTitle().isEmpty()) {
-                    db.addBook(book);
-                }
-            }
-        } catch (Exception e) {
-            Log.d("AWS", e.getMessage());
-            Log.d("AWS", "Couldn't find recos, hardcoding now");
-
-            db.addBook(new Book("Code Complete: A Practical Handbook of Software Construction", "Steve McConnell", "book_heart_icon", 1));
-            db.addBook(new Book("The Mythical Man-Month: Essays on Software Engineering", "Frederick P. Brooks Jr.", "earth", 1));
-            db.addBook(new Book("Tackling Complexity in the Heart of Software", "Eric Evans", "earth", 1));
+//        try {
+//            AwsParser parser = new AwsParser();
+//            List<Book> recommendations = parser.asinSimilarityLookup("0201633612");
+//            for (Book book : recommendations) {
+//                if (book != null && book.getTitle() != null && !book.getTitle().isEmpty()) {
+//                    db.addBook(book);
+//                }
+//            }
+//        } catch (Exception e) {
+//            Log.d("AWS", e.getMessage());
+//            Log.d("AWS", "Couldn't find recos, hardcoding now");
+//
+//            db.addBook(new Book("Code Complete: A Practical Handbook of Software Construction", "Steve McConnell", "book_heart_icon", 1));
+//            db.addBook(new Book("The Mythical Man-Month: Essays on Software Engineering", "Frederick P. Brooks Jr.", "earth", 1));
+//            db.addBook(new Book("Tackling Complexity in the Heart of Software", "Eric Evans", "earth", 1));
 
 //            Book book1 = new Book();
 //            book1.setAsin("ASIN1");
@@ -266,7 +271,7 @@ public class MainActivity extends Activity {
 //            db.addBook(book2);
 //            db.addBook(book3);
 
-        }
+//        }
     }
 
     @Override
